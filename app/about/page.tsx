@@ -84,7 +84,7 @@ export default function AboutPage() {
   return (
     <SmoothScroll>
       <main ref={containerRef} className="select-none touch-pan-y overscroll-none">
-        <StructuredData data={[aboutStructuredData, breadcrumbStructuredData]} />
+        <StructuredData pageType="about" additionalData={[aboutStructuredData, breadcrumbStructuredData]} />
         
         {/* Hero Section */}
         <section ref={heroRef} className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a0a1a] via-[#1a1a2e] to-[#16213e] flex items-center">

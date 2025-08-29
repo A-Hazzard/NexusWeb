@@ -1,28 +1,52 @@
 /**
- * Structured Data Component for Nexus Web
- * Renders JSON-LD structured data for SEO
+ * Comprehensive SEO Structured Data Component
+ * Includes all necessary structured data for maximum search engine visibility
  */
 
-import { generateJSONLD } from '@/lib/seo/utils';
+import Script from 'next/script';
+import {
+  generateOrganizationStructuredData,
+  generateWebsiteStructuredData,
+  generateLocalBusinessStructuredData,
+  generateFAQStructuredData,
+} from '@/lib/seo/utils';
 
-type StructuredDataProps = {
-  data: Record<string, unknown> | Array<Record<string, unknown>>;
-};
+interface StructuredDataProps {
+  pageType?: 'home' | 'about' | 'services' | 'portfolio' | 'contact';
+  additionalData?: Record<string, unknown>[];
+}
 
-export function StructuredData({ data }: StructuredDataProps) {
-  const structuredData = Array.isArray(data) ? data : [data];
-  
+export function StructuredData({ pageType = 'home', additionalData = [] }: StructuredDataProps) {
+  // Base structured data that should be on every page
+  const baseStructuredData = [
+    generateOrganizationStructuredData(),
+    generateWebsiteStructuredData(),
+    generateLocalBusinessStructuredData(),
+  ];
+
+  // Page-specific structured data
+  const pageSpecificData = additionalData;
+
+  // FAQ data for relevant pages
+  const faqData = ['home', 'services', 'contact'].includes(pageType) 
+    ? [generateFAQStructuredData()] 
+    : [];
+
+  // Combine all structured data
+  const allStructuredData = [...baseStructuredData, ...pageSpecificData, ...faqData];
+
   return (
     <>
-      {structuredData.map((item, index) => (
-        <script
+      {allStructuredData.map((data, index) => (
+        <Script
           key={index}
+          id={`structured-data-${index}`}
           type="application/ld+json"
-          dangerouslySetInnerHTML={generateJSONLD(item)}
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(data),
+          }}
         />
       ))}
     </>
   );
 }
-
-export default StructuredData;

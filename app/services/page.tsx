@@ -128,7 +128,7 @@ export default function ServicesPage() {
   return (
     <SmoothScroll>
       <main ref={containerRef} className="select-none touch-pan-y overscroll-none">
-        <StructuredData data={[breadcrumbStructuredData, webDevelopmentStructuredData, seoServiceStructuredData]} />
+        <StructuredData pageType="services" additionalData={[breadcrumbStructuredData, webDevelopmentStructuredData, seoServiceStructuredData]} />
         {/* Hero Section */}
         <section className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a0a1a] via-[#1a1a2e] to-[#16213e] flex items-center">
           <ParallaxSection speed={0.5}>

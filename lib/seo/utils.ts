@@ -1,88 +1,61 @@
 /**
- * SEO Utility Functions for Nexus Web
- * Helper functions for generating SEO metadata and structured data
+ * SEO Utilities for Nexus Web
+ * Comprehensive SEO tools and structured data generation
  */
 
-import { Metadata } from 'next';
-import { PageSEO, ServiceSEO, ArticleSEO } from './types';
-import { SITE_CONFIG, DEFAULT_SEO, BUSINESS_INFO, STRUCTURED_DATA_TEMPLATES } from './config';
+import { SITE_CONFIG, BUSINESS_INFO } from './config';
+import type { ServiceSEO } from './types';
 
-/**
- * Generate Next.js metadata object from PageSEO configuration
- */
-export function generateMetadata(seo: Partial<PageSEO>): Metadata {
-  const title = seo.title || DEFAULT_SEO.title;
-  const description = seo.description || DEFAULT_SEO.description;
-  const ogTitle = seo.ogTitle || title;
-  const ogDescription = seo.ogDescription || description;
-  const ogImage = seo.ogImage || DEFAULT_SEO.ogImage;
-  const canonical = seo.canonical || SITE_CONFIG.url;
-
-  return {
-    title,
-    description,
-    keywords: seo.keywords?.join(', ') || DEFAULT_SEO.keywords.join(', '),
-    authors: [{ name: BUSINESS_INFO.founder.name }],
-    creator: BUSINESS_INFO.name,
-    publisher: BUSINESS_INFO.name,
-    robots: {
-      index: !seo.noindex,
-      follow: !seo.nofollow,
-      googleBot: {
-        index: !seo.noindex,
-        follow: !seo.nofollow,
-        'max-video-preview': -1,
-        'max-image-preview': 'large',
-        'max-snippet': -1,
-      },
+// Enhanced sitemap URL generation with local SEO focus
+export function generateSitemapUrls() {
+  const baseUrl = SITE_CONFIG.url;
+  
+  return [
+    {
+      url: baseUrl,
+      changefreq: 'weekly',
+      priority: 1.0,
     },
-    alternates: {
-      canonical,
-      languages: seo.alternateLanguages?.reduce((acc, lang) => {
-        acc[lang.hreflang] = lang.href;
-        return acc;
-      }, {} as Record<string, string>),
+    {
+      url: `${baseUrl}/about`,
+      changefreq: 'monthly',
+      priority: 0.8,
     },
-    openGraph: {
-      type: (seo.ogType === 'service' || seo.ogType === 'organization') ? 'website' : (seo.ogType || 'website'),
-      locale: SITE_CONFIG.locale,
-      url: canonical,
-      title: ogTitle,
-      description: ogDescription,
-      siteName: BUSINESS_INFO.name,
-      images: [
-        {
-          url: ogImage,
-          width: 1200,
-          height: 630,
-          alt: ogTitle,
-        },
-      ],
+    {
+      url: `${baseUrl}/services`,
+      changefreq: 'weekly',
+      priority: 0.9,
     },
-    twitter: {
-      card: seo.twitterCard || 'summary_large_image',
-      title: seo.twitterTitle || ogTitle,
-      description: seo.twitterDescription || ogDescription,
-      images: [seo.twitterImage || ogImage],
-      creator: DEFAULT_SEO.twitterHandle,
-      site: DEFAULT_SEO.twitterHandle,
+    {
+      url: `${baseUrl}/portfolio`,
+      changefreq: 'weekly',
+      priority: 0.8,
     },
-    viewport: {
-      width: 'device-width',
-      initialScale: 1,
-      maximumScale: 1,
+    {
+      url: `${baseUrl}/contact`,
+      changefreq: 'monthly',
+      priority: 0.7,
     },
-    verification: {
-      google: process.env.GOOGLE_SITE_VERIFICATION,
-      yandex: process.env.YANDEX_VERIFICATION,
-      yahoo: process.env.YAHOO_SITE_VERIFICATION,
+    // Local SEO focused URLs
+    {
+      url: `${baseUrl}/services/web-development-trinidad`,
+      changefreq: 'weekly',
+      priority: 0.9,
     },
-  };
+    {
+      url: `${baseUrl}/services/seo-services-trinidad`,
+      changefreq: 'weekly',
+      priority: 0.9,
+    },
+    {
+      url: `${baseUrl}/services/ecommerce-development-trinidad`,
+      changefreq: 'weekly',
+      priority: 0.8,
+    },
+  ];
 }
 
-/**
- * Generate structured data for services
- */
+// Generate comprehensive structured data for services
 export function generateServiceStructuredData(service: ServiceSEO) {
   return {
     '@context': 'https://schema.org',
@@ -92,7 +65,13 @@ export function generateServiceStructuredData(service: ServiceSEO) {
     provider: {
       '@type': 'Organization',
       name: service.provider,
-      url: BUSINESS_INFO.url,
+      url: SITE_CONFIG.url,
+      address: {
+        '@type': 'PostalAddress',
+        addressLocality: 'Port of Spain',
+        addressRegion: 'Trinidad and Tobago',
+        addressCountry: 'TT',
+      },
       telephone: BUSINESS_INFO.telephone,
       email: BUSINESS_INFO.email,
     },
@@ -103,76 +82,139 @@ export function generateServiceStructuredData(service: ServiceSEO) {
     serviceType: service.serviceType,
     category: service.category,
     priceRange: service.priceRange,
-    hasOfferCatalog: service.offers ? {
-      '@type': 'OfferCatalog',
-      name: `${service.name} Packages`,
-      itemListElement: service.offers.map((offer, index) => ({
-        '@type': 'Offer',
-        name: offer.name,
-        description: offer.description,
-        price: offer.price,
-        priceCurrency: offer.priceCurrency || 'TTD',
-        position: index + 1,
-      })),
-    } : undefined,
-  };
-}
-
-/**
- * Generate structured data for articles/blog posts
- */
-export function generateArticleStructuredData(article: ArticleSEO) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'Article',
-    headline: article.headline,
-    description: article.description,
-    image: article.image,
-    author: {
-      '@type': 'Person',
-      name: article.author,
-    },
-    publisher: {
-      '@type': 'Organization',
-      name: article.publisher,
-      logo: {
-        '@type': 'ImageObject',
-        url: BUSINESS_INFO.logo,
-      },
-    },
-    datePublished: article.datePublished,
-    dateModified: article.dateModified || article.datePublished,
-    wordCount: article.wordCount,
-    articleSection: article.articleSection,
-    keywords: article.keywords?.join(', '),
-    mainEntityOfPage: {
-      '@type': 'WebPage',
-      '@id': SITE_CONFIG.url,
-    },
-  };
-}
-
-/**
- * Generate FAQ structured data
- */
-export function generateFAQStructuredData(faqs: Array<{ question: string; answer: string }>) {
-  return {
-    '@context': 'https://schema.org',
-    '@type': 'FAQPage',
-    mainEntity: faqs.map(faq => ({
-      '@type': 'Question',
-      name: faq.question,
-      acceptedAnswer: {
-        '@type': 'Answer',
-        text: faq.answer,
+    offers: service.offers?.map(offer => ({
+      '@type': 'Offer',
+      name: offer.name,
+      description: offer.description,
+      price: offer.price,
+      priceCurrency: offer.priceCurrency,
+      availability: 'https://schema.org/InStock',
+      seller: {
+        '@type': 'Organization',
+        name: service.provider,
       },
     })),
   };
 }
 
-/**
- * Generate breadcrumb structured data
- */
+// Generate local business structured data
+export function generateLocalBusinessStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': ['LocalBusiness', 'ProfessionalService'],
+    name: BUSINESS_INFO.name,
+    image: BUSINESS_INFO.image,
+    '@id': BUSINESS_INFO.url,
+    url: BUSINESS_INFO.url,
+    telephone: BUSINESS_INFO.telephone,
+    email: BUSINESS_INFO.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: BUSINESS_INFO.address.streetAddress,
+      addressLocality: BUSINESS_INFO.address.addressLocality,
+      addressRegion: BUSINESS_INFO.address.addressRegion,
+      postalCode: BUSINESS_INFO.address.postalCode,
+      addressCountry: BUSINESS_INFO.address.addressCountry,
+    },
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: BUSINESS_INFO.geo.latitude,
+      longitude: BUSINESS_INFO.geo.longitude,
+    },
+    openingHoursSpecification: [
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+        opens: '09:00',
+        closes: '18:00',
+      },
+      {
+        '@type': 'OpeningHoursSpecification',
+        dayOfWeek: ['Saturday'],
+        opens: '10:00',
+        closes: '16:00',
+      },
+    ],
+    priceRange: BUSINESS_INFO.priceRange,
+    areaServed: [
+      {
+        '@type': 'Country',
+        name: 'Trinidad and Tobago',
+      },
+      {
+        '@type': 'Place',
+        name: 'Caribbean',
+      },
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Web Development Services',
+      itemListElement: BUSINESS_INFO.services.map((service, index) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: service,
+        },
+        position: index + 1,
+      })),
+    },
+    sameAs: [
+      BUSINESS_INFO.socialMedia.instagram,
+    ],
+  };
+}
+
+// Generate FAQ structured data
+export function generateFAQStructuredData() {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: [
+      {
+        '@type': 'Question',
+        name: 'How much does a website cost in Trinidad and Tobago?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Our website development services start from TTD 2,000 for basic websites and go up to TTD 25,000 for complex e-commerce solutions. We offer competitive pricing tailored to Caribbean businesses.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Do you provide SEO services in Trinidad and Tobago?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes, we offer comprehensive SEO services including local SEO optimization, Google My Business management, and digital marketing to help your business rank higher in local search results.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'How long does it take to build a website?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Basic websites typically take 2-3 weeks, while complex e-commerce sites may take 4-6 weeks. We provide regular updates throughout the development process.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Do you provide website maintenance services?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Yes, we offer ongoing website maintenance, security updates, content updates, and technical support to keep your website running smoothly.',
+        },
+      },
+      {
+        '@type': 'Question',
+        name: 'Can you help with e-commerce website development?',
+        acceptedAnswer: {
+          '@type': 'Answer',
+          text: 'Absolutely! We specialize in e-commerce development with payment integration, inventory management, and mobile-optimized shopping experiences for Trinidad and Tobago businesses.',
+        },
+      },
+    ],
+  };
+}
+
+// Generate breadcrumb structured data
 export function generateBreadcrumbStructuredData(breadcrumbs: Array<{ name: string; url: string }>) {
   return {
     '@context': 'https://schema.org',
@@ -186,99 +228,137 @@ export function generateBreadcrumbStructuredData(breadcrumbs: Array<{ name: stri
   };
 }
 
-/**
- * Generate review/rating structured data
- */
-export function generateReviewStructuredData(reviews: Array<{
+// Generate article structured data
+export function generateArticleStructuredData(data: {
+  headline: string;
+  description: string;
   author: string;
-  rating: number;
-  reviewBody: string;
   datePublished: string;
-}>) {
+  dateModified: string;
+  image: string;
+  publisher: string;
+  articleSection: string;
+  keywords: string[];
+}) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: data.headline,
+    description: data.description,
+    author: {
+      '@type': 'Person',
+      name: data.author,
+    },
+    datePublished: data.datePublished,
+    dateModified: data.dateModified,
+    image: data.image,
+    publisher: {
+      '@type': 'Organization',
+      name: data.publisher,
+      logo: {
+        '@type': 'ImageObject',
+        url: `${SITE_CONFIG.url}/logo.png`,
+      },
+    },
+    articleSection: data.articleSection,
+    keywords: data.keywords.join(', '),
+  };
+}
+
+// Generate organization structured data
+export function generateOrganizationStructuredData() {
   return {
     '@context': 'https://schema.org',
     '@type': 'Organization',
     name: BUSINESS_INFO.name,
-    aggregateRating: {
-      '@type': 'AggregateRating',
-      ratingValue: reviews.reduce((sum, review) => sum + review.rating, 0) / reviews.length,
-      reviewCount: reviews.length,
-      bestRating: 5,
-      worstRating: 1,
+    legalName: BUSINESS_INFO.legalName,
+    url: BUSINESS_INFO.url,
+    logo: BUSINESS_INFO.logo,
+    image: BUSINESS_INFO.image,
+    description: BUSINESS_INFO.description,
+    telephone: BUSINESS_INFO.telephone,
+    email: BUSINESS_INFO.email,
+    address: {
+      '@type': 'PostalAddress',
+      streetAddress: BUSINESS_INFO.address.streetAddress,
+      addressLocality: BUSINESS_INFO.address.addressLocality,
+      addressRegion: BUSINESS_INFO.address.addressRegion,
+      postalCode: BUSINESS_INFO.address.postalCode,
+      addressCountry: BUSINESS_INFO.address.addressCountry,
     },
-    review: reviews.map(review => ({
-      '@type': 'Review',
-      author: {
-        '@type': 'Person',
-        name: review.author,
+    geo: {
+      '@type': 'GeoCoordinates',
+      latitude: BUSINESS_INFO.geo.latitude,
+      longitude: BUSINESS_INFO.geo.longitude,
+    },
+    foundingDate: BUSINESS_INFO.foundingDate,
+    founder: {
+      '@type': 'Person',
+      name: BUSINESS_INFO.founder.name,
+      jobTitle: BUSINESS_INFO.founder.jobTitle,
+      description: BUSINESS_INFO.founder.description,
+    },
+    areaServed: [
+      {
+        '@type': 'Country',
+        name: 'Trinidad and Tobago',
       },
-      reviewRating: {
-        '@type': 'Rating',
-        ratingValue: review.rating,
-        bestRating: 5,
-        worstRating: 1,
+      {
+        '@type': 'Place',
+        name: 'Caribbean',
       },
-      reviewBody: review.reviewBody,
-      datePublished: review.datePublished,
-    })),
+    ],
+    serviceArea: [
+      {
+        '@type': 'GeoCircle',
+        geoMidpoint: {
+          '@type': 'GeoCoordinates',
+          latitude: BUSINESS_INFO.geo.latitude,
+          longitude: BUSINESS_INFO.geo.longitude,
+        },
+        geoRadius: '500000', // 500km radius
+      },
+    ],
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: 'Web Development Services',
+      itemListElement: BUSINESS_INFO.services.map((service, index) => ({
+        '@type': 'Offer',
+        itemOffered: {
+          '@type': 'Service',
+          name: service,
+        },
+        position: index + 1,
+      })),
+    },
+    priceRange: BUSINESS_INFO.priceRange,
+    currenciesAccepted: BUSINESS_INFO.currenciesAccepted,
+    paymentAccepted: BUSINESS_INFO.paymentAccepted,
+    sameAs: [
+      BUSINESS_INFO.socialMedia.instagram,
+    ],
   };
 }
 
-/**
- * Generate JSON-LD script tag
- */
-export function generateJSONLD(data: Record<string, unknown>) {
+// Generate website structured data
+export function generateWebsiteStructuredData() {
   return {
-    __html: JSON.stringify(data, null, 0),
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    name: BUSINESS_INFO.name,
+    url: BUSINESS_INFO.url,
+    description: BUSINESS_INFO.description,
+    publisher: {
+      '@type': 'Organization',
+      name: BUSINESS_INFO.name,
+    },
+    potentialAction: {
+      '@type': 'SearchAction',
+      target: {
+        '@type': 'EntryPoint',
+        urlTemplate: `${BUSINESS_INFO.url}/search?q={search_term_string}`,
+      },
+      'query-input': 'required name=search_term_string',
+    },
   };
-}
-
-/**
- * Get default structured data for all pages
- */
-export function getDefaultStructuredData(): Record<string, unknown>[] {
-  return [
-    STRUCTURED_DATA_TEMPLATES.organization as Record<string, unknown>,
-    STRUCTURED_DATA_TEMPLATES.website as Record<string, unknown>,
-    STRUCTURED_DATA_TEMPLATES.localBusiness as Record<string, unknown>,
-  ];
-}
-
-/**
- * Generate sitemap URLs
- */
-export function generateSitemapUrls() {
-  const baseUrl = SITE_CONFIG.url;
-  const pages = [
-    { url: baseUrl, priority: 1.0, changefreq: 'weekly' },
-    { url: `${baseUrl}/about`, priority: 0.8, changefreq: 'monthly' },
-    { url: `${baseUrl}/services`, priority: 0.9, changefreq: 'weekly' },
-    { url: `${baseUrl}/portfolio`, priority: 0.8, changefreq: 'weekly' },
-    { url: `${baseUrl}/contact`, priority: 0.7, changefreq: 'monthly' },
-  ];
-
-  return pages;
-}
-
-/**
- * Clean and optimize text for SEO
- */
-export function optimizeTextForSEO(text: string, maxLength?: number): string {
-  // Remove extra whitespace and clean up text
-  let cleaned = text.replace(/\s+/g, ' ').trim();
-  
-  // Truncate if needed
-  if (maxLength && cleaned.length > maxLength) {
-    cleaned = cleaned.substring(0, maxLength - 3) + '...';
-  }
-  
-  return cleaned;
-}
-
-/**
- * Generate canonical URL
- */
-export function generateCanonicalUrl(path: string): string {
-  const cleanPath = path.startsWith('/') ? path : `/${path}`;
-  return `${SITE_CONFIG.url}${cleanPath}`;
 }

@@ -7,8 +7,8 @@ import { BusinessInfo } from './types';
 
 export const SITE_CONFIG = {
   name: 'Nexus Web',
-  url: 'https://nexusweb.tt', // Update with actual domain
-  domain: 'nexusweb.tt',
+  url: 'https://nexuswebtt.com', // Update with your actual domain
+  domain: 'nexuswebtt.com',
   locale: 'en_US',
   defaultLanguage: 'en',
   supportedLanguages: ['en'],
@@ -18,22 +18,22 @@ export const SITE_CONFIG = {
 export const BUSINESS_INFO: BusinessInfo = {
   name: 'Nexus Web',
   legalName: 'Nexus Web Digital Solutions',
-  description: 'Premier web development agency in Trinidad and Tobago, specializing in cutting-edge web solutions, SEO, and digital marketing services for Caribbean businesses.',
+  description: 'Premier web development agency in Trinidad and Tobago, specializing in cutting-edge web solutions, SEO, and digital marketing services for Caribbean businesses. Professional web design, e-commerce development, and local SEO services.',
   url: SITE_CONFIG.url,
   logo: `${SITE_CONFIG.url}/logo.png`,
-  image: `${SITE_CONFIG.url}/og-image.jpg`,
+  image: `${SITE_CONFIG.url}/logo.png`,
   telephone: '+1-868-352-1435',
   email: 'nexuswebtt@gmail.com',
   address: {
     streetAddress: 'Remote Operations',
-    addressLocality: 'Port of Spain',
+    addressLocality: 'Trinidad and Tobago',
     addressRegion: 'Trinidad and Tobago',
-    postalCode: '00000',
+    postalCode: '100001',
     addressCountry: 'TT',
   },
   geo: {
-    latitude: 10.6918,
-    longitude: -61.2225,
+    latitude: 10.692480,
+    longitude: -61.554927,
   },
   foundingDate: '2025-08-01',
   founder: {
@@ -50,13 +50,17 @@ export const BUSINESS_INFO: BusinessInfo = {
     'Website Maintenance',
     'Mobile-Responsive Design',
     'Custom Web Applications',
+    'Local SEO',
+    'Google My Business Management',
+    'Social Media Marketing',
+    'Content Marketing',
   ],
   socialMedia: {
-    // Add social media links when available
+    instagram: 'https://www.instagram.com/nexuswebtt/',
   },
   priceRange: 'TTD 2000 - TTD 25000',
   currenciesAccepted: ['TTD', 'USD'],
-  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer', 'PayPal'],
+  paymentAccepted: ['Cash', 'Credit Card', 'Bank Transfer', 'PayPal', 'Wise'],
 };
 
 export const DEFAULT_SEO = {
@@ -74,7 +78,7 @@ export const DEFAULT_SEO = {
     'Tobago web developer',
     'Caribbean web services',
   ],
-  ogImage: `${SITE_CONFIG.url}/og-image.jpg`,
+  ogImage: `${SITE_CONFIG.url}/logo.png`,
   twitterHandle: '@nexuswebtt', // Update when available
 };
 
@@ -114,6 +118,10 @@ export const STRUCTURED_DATA_TEMPLATES = {
         '@type': 'Place',
         name: 'Caribbean',
       },
+      {
+        '@type': 'Place',
+        name: 'International',
+      },
     ],
     serviceArea: [
       {
@@ -122,7 +130,7 @@ export const STRUCTURED_DATA_TEMPLATES = {
           '@type': 'GeoCoordinates',
           ...BUSINESS_INFO.geo,
         },
-        geoRadius: '500000', // 500km radius
+        geoRadius: '5000000', // 5000km radius for international reach
       },
     ],
     hasOfferCatalog: {
@@ -193,6 +201,14 @@ export const STRUCTURED_DATA_TEMPLATES = {
       {
         '@type': 'Country',
         name: 'Trinidad and Tobago',
+      },
+      {
+        '@type': 'Place',
+        name: 'Caribbean',
+      },
+      {
+        '@type': 'Place',
+        name: 'International',
       },
     ],
   },
