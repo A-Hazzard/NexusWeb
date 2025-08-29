@@ -22,18 +22,20 @@ export async function POST(req: Request) {
       );
     }
 
-    // Create transporter using Gmail
+    // Create transporter using SMTP configuration
     const transporter = nodemailer.createTransport({
-      service: 'gmail',
+      host: process.env.SMTP_HOST,
+      port: parseInt(process.env.SMTP_PORT || '587'),
+      secure: process.env.SMTP_SECURE === 'true', // true for 465, false for other ports
       auth: {
-        user: process.env.GMAIL_USER,
-        pass: process.env.GMAIL_APP_PASSWORD, // Use App Password, not regular password
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
       },
     });
 
     // Email to business owner
     const mailOptions = {
-      from: process.env.GMAIL_USER,
+      from: process.env.SMTP_USER,
       to: 'nexuswebtt@gmail.com',
       subject: `🚀 New Contact Form Submission from ${name}`,
       html: `
@@ -69,7 +71,7 @@ export async function POST(req: Request) {
 
     // Auto-reply to the client
     const autoReplyOptions = {
-      from: process.env.GMAIL_USER,
+      from: process.env.SMTP_USER,
       to: email,
       subject: '🙏 Thank you for contacting Nexus Web!',
       html: `
