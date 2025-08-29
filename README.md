@@ -1,6 +1,6 @@
 # Nexus Web - Modern Web Agency Portfolio
 
-A cutting-edge web agency portfolio showcasing the future of web development. Built for Nexus Web, a Trinidad & Tobago-based digital agency founded by Aaron Hazzard in August 2024.
+A cutting-edge web agency portfolio showcasing the future of web development. Built for Nexus Web, a Trinidad & Tobago-based digital agency founded by Aaron Hazzard in August 2025.
 
 ## ✨ Key Features
 

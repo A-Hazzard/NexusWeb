@@ -10,7 +10,7 @@ import { PageSEO, ServiceSEO } from '@/lib/seo/types';
 // Homepage SEO
 export const homePageSEO: PageSEO = {
   title: 'Nexus Web - Premier Web Development Agency in Trinidad & Tobago',
-  description: 'Transform your digital presence with cutting-edge web solutions. Professional web development, SEO, and digital marketing services in Trinidad and Tobago since 2024.',
+  description: 'Transform your digital presence with cutting-edge web solutions. Professional web development, SEO, and digital marketing services in Trinidad and Tobago since 2025.',
   keywords: [
     'web development Trinidad',
     'web design Tobago',
@@ -49,7 +49,7 @@ export const aboutPageSEO: PageSEO = {
     'about Nexus Web',
     'web development expertise',
     'senior software engineer',
-    'founded 2024',
+    'founded 2025',
   ],
   canonical: `${SITE_CONFIG.url}/about`,
   ogType: 'website',

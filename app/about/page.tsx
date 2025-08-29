@@ -19,7 +19,7 @@ const aboutStructuredData = generateArticleStructuredData({
   headline: 'About Nexus Web - Expert Web Development Team in Trinidad & Tobago',
   description: 'Meet Aaron Hazzard, Senior Software Engineer and founder of Nexus Web. 5+ years of experience delivering exceptional web solutions.',
   author: 'Aaron Hazzard',
-  datePublished: '2024-08-01',
+  datePublished: '2025-08-01',
   dateModified: new Date().toISOString(),
   image: 'https://picsum.photos/600/400?random=5',
   publisher: 'Nexus Web',
@@ -35,22 +35,22 @@ const breadcrumbStructuredData = generateBreadcrumbStructuredData([
 
 const timelineItems: TimelineItemProps[] = [
   {
-    date: 'August 2024',
+    date: 'August 2025',
     title: 'Nexus Web Founded',
     description: 'Aaron Hazzard establishes Nexus Web as a premier web development agency in Trinidad & Tobago, bringing 5+ years of software engineering expertise to the Caribbean market.'
   },
   {
-    date: 'September 2024',
+    date: 'September 2025',
     title: 'First Caribbean Clients',
     description: 'Successfully launched websites for local Trinidad businesses, focusing on responsive design and SEO optimization for the Caribbean market.'
   },
   {
-    date: 'October 2024',
+    date: 'October 2025',
     title: 'E-Commerce Expansion',
     description: 'Introduced comprehensive e-commerce solutions with TTD payment integration, helping local businesses establish strong online presence.'
   },
   {
-    date: 'November 2024',
+    date: 'November 2025',
     title: 'SEO & Digital Marketing',
     description: 'Expanded services to include advanced SEO and digital marketing, helping Caribbean businesses rank higher in local search results.'
   },
@@ -124,7 +124,7 @@ export default function AboutPage() {
                   animate={{ opacity: 1, y: 0 }}
                   transition={{ duration: 0.8, delay: 0.8 }}
                 >
-                  With 5+ years of software engineering expertise, I founded Nexus Web in August 2024 to bring world-class web development services to Trinidad & Tobago and the Caribbean region.
+                  With 5+ years of software engineering expertise, I founded Nexus Web in August 2025 to bring world-class web development services to Trinidad & Tobago and the Caribbean region.
                 </motion.p>
 
                 <motion.div

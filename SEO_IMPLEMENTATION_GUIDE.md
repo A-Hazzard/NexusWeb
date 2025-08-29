@@ -82,7 +82,7 @@ This document outlines the comprehensive SEO strategy and implementation for Nex
 - **Currency**: TTD (Trinidad and Tobago Dollar)
 
 #### **Business Information**
-- **Founded**: August 2024
+- **Founded**: August 2025
 - **Founder**: Aaron Hazzard (Senior Software Engineer, 5+ years)
 - **Contact**: nexuswebtt@gmail.com, +1 (868) 352-1435
 - **Services**: Web Development, SEO, Digital Marketing, E-Commerce

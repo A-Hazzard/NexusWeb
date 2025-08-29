@@ -35,7 +35,7 @@ export const BUSINESS_INFO: BusinessInfo = {
     latitude: 10.6918,
     longitude: -61.2225,
   },
-  foundingDate: '2024-08-01',
+  foundingDate: '2025-08-01',
   founder: {
     name: 'Aaron Hazzard',
     jobTitle: 'Senior Software Engineer & Founder',
