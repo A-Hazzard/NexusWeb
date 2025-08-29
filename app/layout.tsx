@@ -3,7 +3,8 @@ import { Inter } from 'next/font/google'
 import './globals.css'
 import { Navigation } from './components/Navigation'
 import { Footer } from './components/Footer'
-import { StructuredData } from '@/components/seo/StructuredData'
+import { EnhancedStructuredData } from '@/components/seo/EnhancedStructuredData'
+import { WebVitals } from '@/components/seo/WebVitals'
 import { SITE_CONFIG, BUSINESS_INFO } from '@/lib/seo/config'
 
 const inter = Inter({ 
@@ -121,15 +122,16 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth">
       <head>
-        <StructuredData pageType="home" />
+        <EnhancedStructuredData pageType="home" />
+        <WebVitals analyticsId={process.env.NEXT_PUBLIC_GA_ID} />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="" />
         <link rel="dns-prefetch" href="https://picsum.photos" />
         <meta name="format-detection" content="telephone=yes" />
         <meta name="geo.region" content="TT" />
         <meta name="geo.placename" content="Trinidad and Tobago" />
-        <meta name="geo.position" content="10.6918;-61.2225" />
-        <meta name="ICBM" content="10.6918, -61.2225" />
+        <meta name="geo.position" content="10.692480;-61.554927" />
+        <meta name="ICBM" content="10.692480, -61.554927" />
         <meta name="business:contact_data:street_address" content={BUSINESS_INFO.address.streetAddress} />
         <meta name="business:contact_data:locality" content={BUSINESS_INFO.address.addressLocality} />
         <meta name="business:contact_data:region" content={BUSINESS_INFO.address.addressRegion} />
