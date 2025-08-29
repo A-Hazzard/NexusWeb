@@ -14,6 +14,10 @@ import ParallaxSection from '@/components/animations/ParallaxSection'
 import MouseFollower3D from '@/components/animations/MouseFollower3D'
 import SmoothScroll from '@/components/ui/SmoothScroll'
 
+// Import Aaron images for pre-rendering
+import aaronImage from '../../public/aaron.jpeg'
+import aaron2Image from '../../public/aaron2.jpg'
+
 // Generate structured data for the About page
 const aboutStructuredData = generateArticleStructuredData({
   headline: 'About Nexus Web - Expert Web Development Team in Trinidad & Tobago',
@@ -21,7 +25,7 @@ const aboutStructuredData = generateArticleStructuredData({
   author: 'Aaron Hazzard',
   datePublished: '2025-08-01',
   dateModified: new Date().toISOString(),
-  image: 'https://picsum.photos/600/400?random=5',
+  image: aaronImage.src,
   publisher: 'Nexus Web',
   articleSection: 'About Us',
   keywords: ['Aaron Hazzard', 'web development', 'Trinidad and Tobago', 'software engineer'],
@@ -161,7 +165,7 @@ export default function AboutPage() {
                     <div className="absolute -inset-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-2xl blur-2xl opacity-30 animate-pulse"></div>
                     <div className="relative bg-gradient-to-br from-gray-800 to-gray-900 rounded-2xl p-8 border border-gray-700">
                       <Image
-                        src="https://picsum.photos/400/500?random=10&business"
+                        src={aaronImage}
                         alt="Aaron Hazzard - Founder of Nexus Web"
                         width={400}
                         height={500}
@@ -207,8 +211,8 @@ export default function AboutPage() {
                     <MouseFollower3D>
                       <div className="relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-8 shadow-2xl border border-gray-100">
                         <Image
-                          src="https://picsum.photos/600/400?random=15&tech"
-                          alt="Nexus Web Mission - Web Development Excellence"
+                          src={aaron2Image}
+                          alt="Aaron Hazzard - Nexus Web Mission and Web Development Excellence"
                           width={600}
                           height={400}
                           className="w-full h-auto rounded-xl"
