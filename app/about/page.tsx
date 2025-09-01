@@ -15,7 +15,7 @@ import MouseFollower3D from '@/components/animations/MouseFollower3D'
 import SmoothScroll from '@/components/ui/SmoothScroll'
 
 // Import Aaron images for pre-rendering
-import aaronImage from '../../public/aaron.jpeg'
+import aaronImage from '../../public/aaron.png'
 import aaron2Image from '../../public/aaron2.jpg'
 
 // Generate structured data for the About page

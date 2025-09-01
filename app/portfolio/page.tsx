@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
@@ -19,7 +19,8 @@ const breadcrumbStructuredData = generateBreadcrumbStructuredData([
   { name: 'Portfolio', url: `${SITE_CONFIG.url}/portfolio` },
 ])
 
-const portfolioItems = [
+// Static fallback data
+const staticPortfolioItems = [
   {
     title: 'Caribbean Resort & Spa',
     description: 'Luxury resort website with booking system, virtual tours, and multilingual support for international guests.',
@@ -76,13 +77,54 @@ const portfolioItems = [
   }
 ]
 
+// Function to fetch portfolio data from API
+const fetchPortfolioData = async (): Promise<typeof staticPortfolioItems | null> => {
+  try {
+    // In the future, this will fetch from your API endpoint
+    // const response = await fetch('/api/portfolio/projects')
+    // const data = await response.json()
+    // return data.projects
+    
+    // For now, return null to use static data
+    return null
+  } catch (error) {
+    console.error('Error fetching portfolio data:', error)
+    return null
+  }
+}
+
 
 
 export default function PortfolioPage() {
   const containerRef = useRef<HTMLDivElement>(null)
+  const [portfolioItems, setPortfolioItems] = useState(staticPortfolioItems)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     const cleanup = initPageAnimations(containerRef)
+    
+    // Fetch portfolio data
+    const loadPortfolioData = async () => {
+      setIsLoading(true)
+      try {
+        const dynamicData = await fetchPortfolioData()
+        if (dynamicData && dynamicData.length > 0) {
+          setPortfolioItems(dynamicData)
+        } else {
+          // Use static data as fallback
+          setPortfolioItems(staticPortfolioItems)
+        }
+      } catch (error) {
+        console.error('Error loading portfolio data:', error)
+        // Use static data as fallback
+        setPortfolioItems(staticPortfolioItems)
+      } finally {
+        setIsLoading(false)
+      }
+    }
+
+    loadPortfolioData()
+    
     return cleanup
   }, [])
 
@@ -172,7 +214,28 @@ export default function PortfolioPage() {
             </ScrollReveal>
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-7xl mx-auto">
-              {portfolioItems.map((project, index) => (
+              {isLoading ? (
+                // Loading skeleton
+                Array.from({ length: 6 }).map((_, index) => (
+                  <ScrollReveal key={`loading-${index}`} delay={0.1 * index}>
+                    <div className="bg-white rounded-3xl shadow-xl overflow-hidden animate-pulse">
+                      <div className="aspect-[4/3] bg-gray-200"></div>
+                      <div className="p-8">
+                        <div className="h-8 bg-gray-200 rounded mb-4"></div>
+                        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded mb-2"></div>
+                        <div className="h-4 bg-gray-200 rounded mb-6 w-3/4"></div>
+                        <div className="grid grid-cols-3 gap-4 mb-6">
+                          <div className="h-12 bg-gray-200 rounded"></div>
+                          <div className="h-12 bg-gray-200 rounded"></div>
+                          <div className="h-12 bg-gray-200 rounded"></div>
+                        </div>
+                      </div>
+                    </div>
+                  </ScrollReveal>
+                ))
+              ) : (
+                portfolioItems.map((project, index) => (
                 <ScrollReveal key={index} delay={0.1 * index}>
                   <motion.div
                     className="group relative bg-white rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 overflow-hidden"
@@ -263,7 +326,8 @@ export default function PortfolioPage() {
                     </div>
                   </motion.div>
                 </ScrollReveal>
-              ))}
+              ))
+              )}
             </div>
           </div>
         </section>

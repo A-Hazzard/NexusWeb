@@ -50,6 +50,12 @@ export function Navigation() {
               Services
             </Link>
             <Link
+              href="/blog"
+              className="text-gray-700 hover:text-[#FF8A00] transition-colors duration-300"
+            >
+              Blog
+            </Link>
+            <Link
               href="/contact"
               className="bg-[#1a1a2e] text-white px-4 py-2 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300"
             >
@@ -110,6 +116,13 @@ export function Navigation() {
                 onClick={() => setIsMenuOpen(false)}
               >
                 Services
+              </Link>
+              <Link
+                href="/blog"
+                className="text-gray-700 hover:text-[#FF8A00] transition-colors duration-300 px-4"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                Blog
               </Link>
               <Link
                 href="/contact"

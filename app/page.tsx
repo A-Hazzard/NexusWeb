@@ -6,10 +6,35 @@ import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
 import { initPageAnimations } from "@/lib/utils/animations";
 import ScrollReveal from "@/components/animations/ScrollReveal";
-import ParallaxSection from "@/components/animations/ParallaxSection";
+
 import MouseFollower3D from "@/components/animations/MouseFollower3D";
 import FloatingGeometry from "@/components/three/FloatingGeometry";
 import SmoothScroll from "@/components/ui/SmoothScroll";
+
+// Import business components
+import ClientTestimonials from "@/components/business/ClientTestimonials";
+import ServiceCards from "@/components/business/ServiceCards";
+import ProcessTimeline from "@/components/business/ProcessTimeline";
+import PricingCards from "@/components/business/PricingCards";
+import NewsletterSignup from "@/components/business/NewsletterSignup";
+
+// Import section components
+import TrustIndicators from "@/components/sections/TrustIndicators";
+import BlogPreview from "@/components/sections/BlogPreview";
+
+// Import landing page data
+import {
+  testimonials,
+  services,
+  processSteps,
+  pricingTiers,
+  blogPosts,
+  trustIndicators,
+  clientLogos,
+  newsletterSignup,
+  newsletterSocialProof,
+  serviceFeatures,
+} from "@/lib/data/landingData";
 
 // Import landing image for pre-rendering and optimization
 import landingImage from "../public/landingimage.jpg";
@@ -277,66 +302,18 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Stats Section */}
-        <section className="py-20 bg-white relative">
-          <div className="container mx-auto px-4">
-            <ScrollReveal>
-              <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-                {[
-                  {
-                    number: "100+",
-                    label: "Projects Completed",
-                    icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-                  },
-                  {
-                    number: "50+",
-                    label: "Happy Clients",
-                    icon: "M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-2.239",
-                  },
-                  {
-                    number: "5+",
-                    label: "Years Experience",
-                    icon: "M13 10V3L4 14h7v7l9-11h-7z",
-                  },
-                  {
-                    number: "24/7",
-                    label: "Support Available",
-                    icon: "M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364",
-                  },
-                ].map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    className="text-center"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 * index }}
-                    whileHover={{ scale: 1.05 }}
-                  >
-                    <div className="w-16 h-16 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-2xl flex items-center justify-center mx-auto mb-4">
-                      <svg
-                        className="w-8 h-8 text-white"
-                        fill="none"
-                        stroke="currentColor"
-                        viewBox="0 0 24 24"
-                      >
-                        <path
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          strokeWidth={2}
-                          d={stat.icon}
-                        />
-                      </svg>
-                    </div>
-                    <div className="text-3xl md:text-4xl font-bold text-gray-900 mb-2">
-                      {stat.number}
-                    </div>
-                    <p className="text-gray-600 font-medium">{stat.label}</p>
-                  </motion.div>
-                ))}
-              </div>
-            </ScrollReveal>
-          </div>
-        </section>
+        {/* Trust Indicators Section */}
+        <TrustIndicators
+          indicators={trustIndicators}
+          clientLogos={clientLogos}
+          testimonials={testimonials}
+          stats={[
+            { number: "100+", label: "Projects Completed", description: "Successfully delivered" },
+            { number: "50+", label: "Happy Clients", description: "Across Trinidad & Tobago" },
+            { number: "5+", label: "Years Experience", description: "In web development" },
+            { number: "24/7", label: "Support Available", description: "Always here to help" }
+          ]}
+        />
 
         {/* Why Choose Us Section */}
         <section className="py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden">
@@ -442,286 +419,36 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Features Section */}
-        <section className="py-32 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden">
-          <ParallaxSection speed={0.3}>
-            <div className="absolute inset-0 bg-gradient-to-r from-blue-50/50 to-purple-50/50" />
-          </ParallaxSection>
+        {/* Services Section */}
+        <ServiceCards
+          services={services}
+          features={serviceFeatures}
+        />
 
-          <div className="container mx-auto px-4 relative z-10">
-            <ScrollReveal className="text-center mb-20">
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-200 mb-8"
-              >
-                <span className="text-[#FF8A00] font-semibold text-lg">
-                  🎯 Our Services
-                </span>
-              </motion.div>
-              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
-                Complete Digital Solutions
-                <span className="block mt-2 bg-gradient-to-r from-[#FF8A00] via-[#FF6B00] to-[#FF4D00] text-transparent bg-clip-text">
-                  For Your Business
-                </span>
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                From stunning websites to powerful digital marketing, we provide
-                everything your Trinidad & Tobago business needs to succeed
-                online.
-              </p>
-            </ScrollReveal>
-
-            <div className="grid grid-cols-1 md:grid-cols-3 gap-10 mt-20">
-              {[
-                {
-                  icon: "M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
-                  title: "Web Design & Development",
-                  description:
-                    "Custom websites and web applications built with modern technologies. Responsive, fast, and optimized for the Caribbean market.",
-                  color: "from-blue-500 to-cyan-500",
-                  delay: 0.2,
-                },
-                {
-                  icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
-                  title: "SEO & Digital Marketing",
-                  description:
-                    "Dominate local search results and reach your target audience in Trinidad, Tobago, and throughout the Caribbean region.",
-                  color: "from-green-500 to-emerald-500",
-                  delay: 0.4,
-                },
-                {
-                  icon: "M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z",
-                  title: "E-Commerce Solutions",
-                  description:
-                    "Complete online store solutions with secure payments, inventory management, and mobile-optimized shopping experiences.",
-                  color: "from-purple-500 to-pink-500",
-                  delay: 0.6,
-                },
-              ].map((feature, index) => (
-                <ScrollReveal key={index} delay={feature.delay}>
-                  <motion.div
-                    className="feature-card group relative p-10 bg-white rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
-                    whileHover={{ y: -10, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.div
-                      className={`absolute inset-0 bg-gradient-to-r ${feature.color} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
-                    />
-
-                    <div className="relative z-10">
-                      <motion.div
-                        className="relative mb-8"
-                        whileHover={{ scale: 1.1, rotate: 5 }}
-                        transition={{ duration: 0.3 }}
-                      >
-                        <div
-                          className={`w-20 h-20 bg-gradient-to-r ${feature.color} rounded-3xl flex items-center justify-center mb-6 shadow-lg`}
-                        >
-                          <svg
-                            className="w-10 h-10 text-white"
-                            fill="none"
-                            stroke="currentColor"
-                            viewBox="0 0 24 24"
-                          >
-                            <path
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                              strokeWidth={2}
-                              d={feature.icon}
-                            />
-                          </svg>
-                        </div>
-                        <motion.div
-                          className={`absolute -inset-4 bg-gradient-to-r ${feature.color} rounded-3xl opacity-0 group-hover:opacity-20 blur-xl transition-all duration-500`}
-                        />
-                      </motion.div>
-
-                      <h3 className="text-2xl font-bold mb-6 text-gray-900 group-hover:text-gray-800 transition-colors">
-                        {feature.title}
-                      </h3>
-                      <p className="text-gray-600 leading-relaxed text-lg group-hover:text-gray-700 transition-colors mb-6">
-                        {feature.description}
-                      </p>
-
-                      <Link
-                        href="/services"
-                        className={`inline-flex items-center text-sm font-semibold bg-gradient-to-r ${feature.color} bg-clip-text text-transparent group-hover:underline`}
-                      >
-                        Learn More
-                        <svg
-                          className="w-4 h-4 ml-1"
-                          fill="none"
-                          stroke="currentColor"
-                          viewBox="0 0 24 24"
-                        >
-                          <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={2}
-                            d="M9 5l7 7-7 7"
-                          />
-                        </svg>
-                      </Link>
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
-              ))}
-            </div>
-
-            <ScrollReveal className="text-center mt-16">
-              <Link
-                href="/services"
-                className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden"
-              >
-                <span className="relative z-10">View All Services</span>
-                <motion.svg
-                  className="w-6 h-6 ml-3 relative z-10"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                  whileHover={{ x: 5 }}
-                  transition={{ duration: 0.2 }}
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
-                </motion.svg>
-              </Link>
-            </ScrollReveal>
-          </div>
-        </section>
+        {/* Pricing Section */}
+        <PricingCards
+          tiers={pricingTiers}
+        />
 
         {/* Testimonials Section */}
-        <section className="py-32 bg-gradient-to-br from-gray-100 via-gray-50 to-white relative overflow-hidden">
-          <ParallaxSection speed={0.2}>
-            <div className="absolute inset-0 bg-gradient-to-r from-orange-50/30 to-purple-50/30" />
-          </ParallaxSection>
+        <ClientTestimonials
+          testimonials={testimonials}
+        />
 
-          <div className="container mx-auto px-4 relative z-10">
-            <ScrollReveal className="text-center mb-20">
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-200 mb-8"
-              >
-                <span className="text-[#FF8A00] font-semibold text-lg">
-                  💬 Client Stories
-                </span>
-              </motion.div>
-              <h2 className="text-4xl md:text-6xl font-bold text-gray-900 mb-8 leading-tight">
-                Trusted by Businesses
-                <span className="block mt-2 bg-gradient-to-r from-[#FF8A00] via-[#FF6B00] to-[#FF4D00] text-transparent bg-clip-text">
-                  Worldwide
-                </span>
-              </h2>
-              <p className="text-xl md:text-2xl text-gray-600 max-w-3xl mx-auto leading-relaxed">
-                See what our clients have to say about their transformative
-                experience working with Nexus Web
-              </p>
-            </ScrollReveal>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-10 max-w-6xl mx-auto">
-              {[
-                {
-                  name: "Alex Rodriguez",
-                  position: "CEO, TechVenture",
-                  image: "https://picsum.photos/150/150?random=10",
-                  quote:
-                    "Nexus Web delivered exceptional results that exceeded our expectations. Their expertise in modern web development and attention to detail transformed our online presence completely. The new website has significantly improved our user engagement and conversion rates.",
-                  rating: 5,
-                  delay: 0.2,
-                },
-                {
-                  name: "Sarah Chen",
-                  position: "Marketing Director, InnovateCorp",
-                  image: "https://picsum.photos/150/150?random=11",
-                  quote:
-                    "Working with Nexus Web was a game-changer for our business. Their modern approach to web development, innovative design solutions, and commitment to performance helped us achieve our digital goals faster than we imagined.",
-                  rating: 5,
-                  delay: 0.4,
-                },
-              ].map((testimonial, index) => (
-                <ScrollReveal key={index} delay={testimonial.delay}>
-                  <motion.div
-                    className="group relative bg-white/80 backdrop-blur-sm p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-all duration-500 border border-gray-200/50 overflow-hidden"
-                    whileHover={{ y: -8, scale: 1.02 }}
-                    transition={{ duration: 0.3 }}
-                  >
-                    <motion.div className="absolute inset-0 bg-gradient-to-r from-[#FF8A00]/5 to-[#FF4D00]/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
 
-                    <div className="relative z-10">
-                      {/* Stars */}
-                      <div className="flex gap-1 mb-8">
-                        {[...Array(testimonial.rating)].map((_, i) => (
-                          <motion.svg
-                            key={i}
-                            className="w-6 h-6 text-[#FF8A00]"
-                            fill="currentColor"
-                            viewBox="0 0 24 24"
-                            initial={{ scale: 0, rotate: -180 }}
-                            whileInView={{ scale: 1, rotate: 0 }}
-                            transition={{ duration: 0.5, delay: 0.1 * i }}
-                          >
-                            <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
-                          </motion.svg>
-                        ))}
-                      </div>
+        {/* Process Section */}
+        <ProcessTimeline
+          steps={processSteps}
+        />
 
-                      {/* Quote */}
-                      <blockquote className="text-gray-700 text-lg leading-relaxed mb-8 font-medium">
-                        &ldquo;{testimonial.quote}&rdquo;
-                      </blockquote>
+        {/* Blog Preview Section */}
+        <BlogPreview
+          posts={blogPosts}
+          categories={['Web Development', 'E-Commerce', 'SEO', 'Security', 'Design']}
+        />
 
-                      {/* Author */}
-                      <div className="flex items-center">
-                        <motion.div
-                          className="relative"
-                          whileHover={{ scale: 1.1 }}
-                          transition={{ duration: 0.2 }}
-                        >
-                          <div className="w-16 h-16 rounded-2xl overflow-hidden border-2 border-[#FF8A00]/20">
-                            <Image
-                              src={testimonial.image}
-                              alt={testimonial.name}
-                              width={64}
-                              height={64}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div className="absolute -bottom-2 -right-2 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-full p-1.5 shadow-lg">
-                            <svg
-                              className="w-3 h-3 text-white"
-                              fill="currentColor"
-                              viewBox="0 0 24 24"
-                            >
-                              <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                            </svg>
-                          </div>
-                        </motion.div>
-                        <div className="ml-4">
-                          <h4 className="font-bold text-xl text-gray-900 mb-1">
-                            {testimonial.name}
-                          </h4>
-                          <p className="text-gray-600 font-medium">
-                            {testimonial.position}
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  </motion.div>
-                </ScrollReveal>
-              ))}
-            </div>
-          </div>
-        </section>
-
-        {/* CTA Section */}
+        {/* Contact & Newsletter Section - Truly unified, no cards */}
         <section className="py-32 bg-gradient-to-br from-[#0a0a1a] via-[#1a1a2e] to-[#16213e] relative overflow-hidden">
           {/* Animated background elements */}
           <motion.div
@@ -735,123 +462,226 @@ export default function Home() {
             }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           />
-
+          
           <div className="container mx-auto px-4 relative z-10">
-            <ScrollReveal className="max-w-5xl mx-auto text-center">
-              <motion.div
-                initial={{ scale: 0.9, opacity: 0 }}
-                whileInView={{ scale: 1, opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-orange-500/20 to-red-500/20 backdrop-blur-sm border border-orange-500/30 mb-8"
-              >
-                <span className="text-[#FF8A00] font-semibold text-lg">
-                  🚀 Start Building Today
+            <ScrollReveal className="text-center mb-20">
+              <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
+                Ready to Start Your
+                <span className="block mt-2 bg-gradient-to-r from-[#FF8A00] via-[#FF6B00] to-[#FF4D00] text-transparent bg-clip-text">
+                  Digital Journey?
                 </span>
-              </motion.div>
-
-              <motion.h2
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.8, delay: 0.2 }}
-                className="text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-8 leading-tight"
-              >
-                Ready to Transform Your
-                <span className="block mt-4 bg-gradient-to-r from-[#FF8A00] via-[#FF6B00] to-[#FF4D00] text-transparent bg-clip-text">
-                  Digital Future?
-                </span>
-              </motion.h2>
-
-              <motion.p
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.4 }}
-                className="text-xl md:text-2xl text-gray-300 mb-16 max-w-3xl mx-auto leading-relaxed"
-              >
-                Join the hundreds of businesses that have already elevated their
-                online presence with our expert web development services and
-                cutting-edge design solutions.
-              </motion.p>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.6 }}
-                className="flex flex-col sm:flex-row gap-6 justify-center mb-20"
-              >
-                <Link
-                  href="/contact"
-                  className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all duration-300 inline-flex items-center justify-center overflow-hidden shadow-2xl shadow-orange-500/25 hover:shadow-orange-500/40"
-                >
-                  <span className="relative z-10">
-                    Schedule Free Consultation
-                  </span>
-                  <motion.div
-                    className="absolute inset-0 bg-gradient-to-r from-[#FF4D00] to-[#FF8A00]"
-                    initial={{ x: "100%" }}
-                    whileHover={{ x: 0 }}
-                    transition={{ duration: 0.3 }}
-                  />
-                  <motion.svg
-                    className="w-6 h-6 ml-3 relative z-10"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                    whileHover={{ x: 5 }}
-                    transition={{ duration: 0.2 }}
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M13 7l5 5m0 0l-5 5m5-5H6"
-                    />
-                  </motion.svg>
-                </Link>
-
-                <Link
-                  href="/portfolio"
-                  className="group border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white px-12 py-6 rounded-2xl text-xl font-bold hover:bg-white/20 hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center"
-                >
-                  View Success Stories
-                  <motion.div
-                    className="w-3 h-3 bg-[#FF8A00] rounded-full ml-3"
-                    animate={{ scale: [1, 1.5, 1] }}
-                    transition={{ duration: 2, repeat: Infinity }}
-                  />
-                </Link>
-              </motion.div>
-
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6, delay: 0.8 }}
-                className="grid grid-cols-2 md:grid-cols-4 gap-12 max-w-4xl mx-auto"
-              >
-                {[
-                  { number: "100+", label: "Projects Delivered" },
-                  { number: "100%", label: "Client Satisfaction" },
-                  { number: "24/7", label: "Support Available" },
-                  { number: "5+", label: "Years Experience" },
-                ].map((stat, index) => (
-                  <motion.div
-                    key={index}
-                    className="text-center"
-                    initial={{ scale: 0.8, opacity: 0 }}
-                    whileInView={{ scale: 1, opacity: 1 }}
-                    transition={{ duration: 0.5, delay: 0.1 * index }}
-                    whileHover={{ scale: 1.1 }}
-                  >
-                    <div className="text-4xl md:text-5xl font-bold text-[#FF8A00] mb-3">
-                      {stat.number}
-                    </div>
-                    <p className="text-gray-300 font-medium">{stat.label}</p>
-                  </motion.div>
-                ))}
-              </motion.div>
+              </h2>
+              <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
+                Let&apos;s discuss your project and create something extraordinary together. 
+                Get in touch with us today for a free consultation.
+              </p>
             </ScrollReveal>
+
+            <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 max-w-6xl mx-auto mb-20">
+              {/* Contact Form - No card, just the form */}
+              <ScrollReveal>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-6">Get In Touch</h3>
+                  <form className="space-y-6">
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      <div>
+                        <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-2">
+                          First Name
+                        </label>
+                        <input
+                          type="text"
+                          id="firstName"
+                          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
+                          placeholder="Your first name"
+                        />
+                      </div>
+                      <div>
+                        <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-2">
+                          Last Name
+                        </label>
+                        <input
+                          type="text"
+                          id="lastName"
+                          className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
+                          placeholder="Your last name"
+                        />
+                      </div>
+                        </div>
+                    <div>
+                      <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
+                        Email Address
+                      </label>
+                      <input
+                        type="email"
+                        id="email"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
+                        placeholder="your.email@example.com"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="phone" className="block text-sm font-medium text-gray-300 mb-2">
+                        Phone Number
+                      </label>
+                      <input
+                        type="tel"
+                        id="phone"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
+                        placeholder="+1 (868) 555-0123"
+                      />
+                    </div>
+                    <div>
+                      <label htmlFor="service" className="block text-sm font-medium text-gray-300 mb-2">
+                        Service Interest
+                      </label>
+                      <select
+                        id="service"
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
+                      >
+                        <option value="">Select a service</option>
+                        <option value="web-design">Web Design</option>
+                        <option value="ecommerce">E-Commerce Development</option>
+                        <option value="seo">SEO & Marketing</option>
+                        <option value="maintenance">Website Maintenance</option>
+                        <option value="consultation">Consultation</option>
+                      </select>
+            </div>
+                    <div>
+                      <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
+                        Project Details
+                      </label>
+                      <textarea
+                        id="message"
+                        rows={4}
+                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300 resize-none"
+                        placeholder="Tell us about your project, goals, and timeline..."
+                      />
+          </div>
+                    <motion.button
+                      type="submit"
+                      className="w-full py-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+                      whileHover={{ scale: 1.02 }}
+                      whileTap={{ scale: 0.98 }}
+                    >
+                      Send Message
+                    </motion.button>
+                  </form>
+                </div>
+            </ScrollReveal>
+
+              {/* Contact Information */}
+              <ScrollReveal delay={0.2}>
+                <div className="space-y-8">
+                  <div>
+                    <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
+                    <p className="text-gray-300 leading-relaxed mb-8">
+                      Ready to transform your digital presence? We&apos;re here to help you succeed. 
+                      Reach out to us through any of the channels below.
+                    </p>
+                  </div>
+
+                  <div className="space-y-6">
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-white mb-1">Phone</h4>
+                        <p className="text-gray-300">+1 (868) 555-0123</p>
+                        <p className="text-gray-400 text-sm">Mon-Fri: 9AM-6PM AST</p>
+                      </div>
+                      </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                      </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-white mb-1">Email</h4>
+                        <p className="text-gray-300">info@nexusweb.tt</p>
+                        <p className="text-gray-400 text-sm">We&apos;ll respond within 24 hours</p>
+                      </div>
+                    </div>
+
+                    <div className="flex items-start space-x-4">
+                      <div className="w-12 h-12 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-xl flex items-center justify-center flex-shrink-0">
+                        <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                            </svg>
+                          </div>
+                      <div>
+                        <h4 className="text-lg font-semibold text-white mb-1">Location</h4>
+                        <p className="text-gray-300">Port of Spain, Trinidad & Tobago</p>
+                        <p className="text-gray-400 text-sm">Serving the entire Caribbean</p>
+                        </div>
+                      </div>
+                    </div>
+
+                  <div className="pt-6">
+                    <h4 className="text-lg font-semibold text-white mb-4">Follow Us</h4>
+                    <div className="flex space-x-4">
+                      <motion.a
+                        href="#"
+                        className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-[#FF8A00] hover:border-[#FF8A00] transition-all duration-300"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M24 4.557c-.883.392-1.832.656-2.828.775 1.017-.609 1.798-1.574 2.165-2.724-.951.564-2.005.974-3.127 1.195-.897-.957-2.178-1.555-3.594-1.555-3.179 0-5.515 2.966-4.797 6.045-4.091-.205-7.719-2.165-10.148-5.144-1.29 2.213-.669 5.108 1.523 6.574-.806-.026-1.566-.247-2.229-.616-.054 2.281 1.581 4.415 3.949 4.89-.693.188-1.452.232-2.224.084.626 1.956 2.444 3.379 4.6 3.419-2.07 1.623-4.678 2.348-7.29 2.04 2.179 1.397 4.768 2.212 7.548 2.212 9.142 0 14.307-7.721 13.995-14.646.962-.695 1.797-1.562 2.457-2.549z"/>
+                        </svg>
+                      </motion.a>
+                      <motion.a
+                        href="#"
+                        className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-[#FF8A00] hover:border-[#FF8A00] transition-all duration-300"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M22.46 6c-.77.35-1.6.58-2.46.69.88-.53 1.56-1.37 1.88-2.38-.83.5-1.75.85-2.72 1.05C18.37 4.5 17.26 4 16 4c-2.35 0-4.27 1.92-4.27 4.29 0 .34.04.67.11.98C8.28 9.09 5.11 7.38 3 4.79c-.37.63-.58 1.37-.58 2.15 0 1.49.75 2.81 1.91 3.56-.71 0-1.37-.2-1.95-.5v.03c0 2.08 1.48 3.82 3.44 4.21a4.22 4.22 0 0 1-1.93.07 4.28 4.28 0 0 0 4 2.98 8.521 8.521 0 0 1-5.33 1.84c-.34 0-.68-.02-1.02-.06C3.44 20.29 5.7 21 8.12 21 16 21 20.33 14.46 20.33 8.79c0-.19 0-.37-.01-.56.84-.6 1.56-1.36 2.14-2.23z"/>
+                        </svg>
+                      </motion.a>
+                      <motion.a
+                        href="#"
+                        className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-[#FF8A00] hover:border-[#FF8A00] transition-all duration-300"
+                        whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433c-1.144 0-2.063-.926-2.063-2.065 0-1.138.92-2.063 2.063-2.063 1.14 0 2.064.925 2.064 2.063 0 1.139-.925 2.065-2.064 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+                        </svg>
+                      </motion.a>
+                      <motion.a
+                        href="#"
+                        className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-[#FF8A00] hover:border-[#FF8A00] transition-all duration-300"
+                    whileHover={{ scale: 1.1 }}
+                        whileTap={{ scale: 0.9 }}
+                      >
+                        <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
+                          <path d="M12.017 0C5.396 0 .029 5.367.029 11.987c0 5.079 3.158 9.417 7.618 11.174-.105-.949-.199-2.403.041-3.439.219-.937 1.406-5.957 1.406-5.957s-.359-.72-.359-1.781c0-1.663.967-2.911 2.168-2.911 1.024 0 1.518.769 1.518 1.688 0 1.029-.653 2.567-.992 3.992-.285 1.193.6 2.165 1.775 2.165 2.128 0 3.768-2.245 3.768-5.487 0-2.861-2.063-4.869-5.008-4.869-3.41 0-5.409 2.562-5.409 5.199 0 1.033.394 2.143.889 2.741.099.12.112.225.085.345-.09.375-.293 1.199-.334 1.363-.053.225-.172.271-.402.165-1.495-.69-2.433-2.878-2.433-4.646 0-3.776 2.748-7.252 7.92-7.252 4.158 0 7.392 2.967 7.392 6.923 0 4.135-2.607 7.462-6.233 7.462-1.214 0-2.357-.629-2.746-1.378l-.748 2.853c-.271 1.043-1.002 2.35-1.492 3.146C9.57 23.812 10.763 24.009 12.017 24.009c6.624 0 11.99-5.367 11.99-11.988C24.007 5.367 18.641.001 12.017.001z"/>
+                        </svg>
+                      </motion.a>
+                    </div>
+                  </div>
+                    </div>
+            </ScrollReveal>
+            </div>
+
+            {/* Newsletter Section - Now truly part of the same section */}
+            <div className="max-w-4xl mx-auto">
+              <NewsletterSignup
+                signup={newsletterSignup}
+                benefits={newsletterSignup.benefits}
+                socialProof={newsletterSocialProof}
+              />
+            </div>
           </div>
         </section>
       </main>
     </SmoothScroll>
   );
 }
+
+

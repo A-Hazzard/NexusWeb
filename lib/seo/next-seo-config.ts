@@ -152,4 +152,12 @@ export const pageSEOConfigs = {
       description: 'Contact our web development team for a free consultation and quote. Professional web services in Trinidad and Tobago.',
     },
   },
+  faq: {
+    title: 'Frequently Asked Questions - Nexus Web',
+    description: 'Get answers to common questions about our web development services, pricing, technical details, and support. Everything you need to know about working with Nexus Web.',
+    openGraph: {
+      title: 'FAQ - Web Development Questions - Nexus Web',
+      description: 'Frequently asked questions about web development services, pricing, and support. Get answers about working with Nexus Web in Trinidad and Tobago.',
+    },
+  },
 };

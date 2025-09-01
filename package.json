@@ -25,6 +25,8 @@
     "radix": "^0.0.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
     "schema-dts": "^1.1.5",
     "three": "^0.179.1",
     "web-vitals": "^5.1.0"
