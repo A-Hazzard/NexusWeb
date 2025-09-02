@@ -6,6 +6,7 @@ import { Footer } from './components/Footer'
 import { EnhancedStructuredData } from '@/components/seo/EnhancedStructuredData'
 import { WebVitals } from '@/components/seo/WebVitals'
 import { SITE_CONFIG, BUSINESS_INFO } from '@/lib/seo/config'
+import { AuthProvider } from '@/lib/contexts/AuthContext'
 
 const inter = Inter({ 
   subsets: ['latin'],
@@ -141,11 +142,13 @@ export default function RootLayout({
         <meta name="business:contact_data:email" content={BUSINESS_INFO.email} />
       </head>
       <body className={`${inter.className} overflow-x-hidden`}>
-        <Navigation />
-        <div className="pt-20">
-          {children}
-        </div>
-        <Footer />
+        <AuthProvider>
+          <Navigation />
+          <div className="pt-20">
+            {children}
+          </div>
+          <Footer />
+        </AuthProvider>
       </body>
     </html>
   )

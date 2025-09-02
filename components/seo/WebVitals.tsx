@@ -33,13 +33,9 @@ export function WebVitals({ analyticsId }: WebVitalsProps) {
         });
       }
 
-      // Log to console in development
+      // Log to console in development (reduced verbosity)
       if (process.env.NODE_ENV === 'development') {
-        console.log(`Web Vital: ${name}`, {
-          value: Math.round(name === 'CLS' ? delta * 1000 : delta),
-          delta,
-          id,
-        });
+        console.log(`Web Vital: ${name}`, Math.round(name === 'CLS' ? delta * 1000 : delta));
       }
     };
 
@@ -60,12 +56,7 @@ export function useWebVitals() {
     const observer = new PerformanceObserver((list) => {
       for (const entry of list.getEntries()) {
         if (process.env.NODE_ENV === 'development') {
-          console.log('Performance Entry:', {
-            name: entry.name,
-            type: entry.entryType,
-            startTime: entry.startTime,
-            duration: entry.duration,
-          });
+          console.log('Performance:', entry.name, Math.round(entry.duration));
         }
       }
     });

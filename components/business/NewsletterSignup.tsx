@@ -25,108 +25,23 @@ export default function NewsletterSignup({
   description = "Join thousands of business owners who receive our weekly insights, tips, and exclusive offers.",
   className = "",
 }: NewsletterSignupProps) {
-  const [formData, setFormData] = useState({
-    email: "",
-    firstName: "",
-    lastName: "",
-    company: "",
-    industry: "",
-    interests: [] as string[],
-    gdprConsent: false,
-  });
+  const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
-  const [error, setError] = useState("");
-
-  const industryOptions = [
-    "E-commerce",
-    "Restaurant & Food",
-    "Healthcare",
-    "Real Estate",
-    "Education",
-    "Professional Services",
-    "Manufacturing",
-    "Retail",
-    "Technology",
-    "Other"
-  ];
-
-  const interestOptions = [
-    "Web Development",
-    "E-commerce Solutions",
-    "SEO & Marketing",
-    "Mobile Apps",
-    "Website Maintenance",
-    "Digital Strategy",
-    "Local Business Growth"
-  ];
-
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({ ...prev, [name]: value }));
-  };
-
-  const handleInterestChange = (interest: string) => {
-    setFormData(prev => ({
-      ...prev,
-      interests: prev.interests.includes(interest)
-        ? prev.interests.filter(i => i !== interest)
-        : [...prev.interests, interest]
-    }));
-  };
-
-  const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setFormData(prev => ({ ...prev, gdprConsent: e.target.checked }));
-  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setError("");
-    
-    if (!formData.gdprConsent) {
-      setError("Please accept the GDPR consent to continue");
-      return;
-    }
-
     setIsSubmitting(true);
     
-    try {
-      const response = await fetch('/api/newsletter/subscribe', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          ...formData,
-          source: 'landing-page'
-        }),
-      });
-
-      const result = await response.json();
-
-      if (!response.ok) {
-        throw new Error(result.error || 'Subscription failed');
-      }
-
-      setIsSubmitted(true);
-      setFormData({
-        email: "",
-        firstName: "",
-        lastName: "",
-        company: "",
-        industry: "",
-        interests: [],
-        gdprConsent: false,
-      });
-      
-      // Reset after 5 seconds
-      setTimeout(() => setIsSubmitted(false), 5000);
-      
-    } catch (err) {
-      setError(err instanceof Error ? err.message : 'Subscription failed');
-    } finally {
-      setIsSubmitting(false);
-    }
+    // Simulate API call
+    await new Promise(resolve => setTimeout(resolve, 1000));
+    
+    setIsSubmitting(false);
+    setIsSubmitted(true);
+    setEmail("");
+    
+    // Reset after 3 seconds
+    setTimeout(() => setIsSubmitted(false), 3000);
   };
 
   return (
@@ -165,180 +80,51 @@ export default function NewsletterSignup({
             {description}
           </motion.p>
 
-          {/* Enhanced Newsletter Form */}
+          {/* Newsletter Form */}
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.6 }}
-            className="max-w-3xl mx-auto mb-12"
+            className="max-w-2xl mx-auto mb-12"
           >
-            {isSubmitted ? (
-              <motion.div
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                className="bg-green-500/20 border border-green-500/30 rounded-2xl p-8 text-center"
+            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-4">
+              <div className="flex-1">
+                <input
+                  type="email"
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder={signup.placeholder}
+                  required
+                  className="w-full px-6 py-4 rounded-xl bg-white/10 text-white placeholder-gray-400 focus:outline-none transition-all duration-300"
+                />
+              </div>
+              <motion.button
+                type="submit"
+                disabled={isSubmitting || isSubmitted}
+                className="px-8 py-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
               >
-                <div className="w-16 h-16 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
-                  <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                  </svg>
-                </div>
-                <h3 className="text-2xl font-bold text-white mb-2">Welcome to Nexus Web!</h3>
-                <p className="text-gray-300">Thank you for subscribing. Check your email for our welcome message and exclusive resources.</p>
-              </motion.div>
-            ) : (
-              <form onSubmit={handleSubmit} className="space-y-6">
-                {/* Name Fields */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-2 text-left">
-                      First Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="firstName"
-                      name="firstName"
-                      value={formData.firstName}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
-                      placeholder="Your first name"
-                    />
+                {isSubmitting ? (
+                  <div className="flex items-center">
+                    <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
+                    Subscribing...
                   </div>
-                  <div>
-                    <label htmlFor="lastName" className="block text-sm font-medium text-gray-300 mb-2 text-left">
-                      Last Name *
-                    </label>
-                    <input
-                      type="text"
-                      id="lastName"
-                      name="lastName"
-                      value={formData.lastName}
-                      onChange={handleInputChange}
-                      required
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
-                      placeholder="Your last name"
-                    />
+                ) : isSubmitted ? (
+                  <div className="flex items-center">
+                    <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Subscribed!
                   </div>
-                </div>
-
-                {/* Email Field */}
-                <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2 text-left">
-                    Email Address *
-                  </label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    required
-                    className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
-                    placeholder="your.email@example.com"
-                  />
-                </div>
-
-                {/* Company and Industry */}
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-                  <div>
-                    <label htmlFor="company" className="block text-sm font-medium text-gray-300 mb-2 text-left">
-                      Company
-                    </label>
-                    <input
-                      type="text"
-                      id="company"
-                      name="company"
-                      value={formData.company}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
-                      placeholder="Your company name"
-                    />
-                  </div>
-                  <div>
-                    <label htmlFor="industry" className="block text-sm font-medium text-gray-300 mb-2 text-left">
-                      Industry
-                    </label>
-                    <select
-                      id="industry"
-                      name="industry"
-                      value={formData.industry}
-                      onChange={handleInputChange}
-                      className="w-full px-4 py-3 rounded-xl bg-white/10 border border-white/20 text-white focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
-                    >
-                      <option value="">Select your industry</option>
-                      {industryOptions.map(industry => (
-                        <option key={industry} value={industry}>{industry}</option>
-                      ))}
-                    </select>
-                  </div>
-                </div>
-
-                {/* Interests */}
-                <div>
-                  <label className="block text-sm font-medium text-gray-300 mb-3 text-left">
-                    What interests you most? (Select all that apply)
-                  </label>
-                  <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
-                    {interestOptions.map(interest => (
-                      <label key={interest} className="flex items-center space-x-2 cursor-pointer">
-                        <input
-                          type="checkbox"
-                          checked={formData.interests.includes(interest)}
-                          onChange={() => handleInterestChange(interest)}
-                          className="w-4 h-4 text-[#FF8A00] bg-white/10 border-white/20 rounded focus:ring-[#FF8A00] focus:ring-2"
-                        />
-                        <span className="text-sm text-gray-300">{interest}</span>
-                      </label>
-                    ))}
-                  </div>
-                </div>
-
-                {/* GDPR Consent */}
-                <div className="flex items-start space-x-3">
-                  <input
-                    type="checkbox"
-                    id="gdprConsent"
-                    checked={formData.gdprConsent}
-                    onChange={handleCheckboxChange}
-                    required
-                    className="w-5 h-5 mt-1 text-[#FF8A00] bg-white/10 border-white/20 rounded focus:ring-[#FF8A00] focus:ring-2"
-                  />
-                  <label htmlFor="gdprConsent" className="text-sm text-gray-300 leading-relaxed">
-                    I consent to receiving marketing emails from Nexus Web. I understand that I can unsubscribe at any time and that my data will be handled in accordance with our privacy policy. *
-                  </label>
-                </div>
-
-                {/* Error Message */}
-                {error && (
-                  <div className="bg-red-500/20 border border-red-500/30 rounded-xl p-4 text-red-300 text-sm">
-                    {error}
-                  </div>
+                ) : (
+                  signup.buttonText
                 )}
-
-                {/* Submit Button */}
-                <motion.button
-                  type="submit"
-                  disabled={isSubmitting || !formData.gdprConsent}
-                  className="w-full py-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed disabled:hover:scale-100"
-                  whileHover={{ scale: 1.02 }}
-                  whileTap={{ scale: 0.98 }}
-                >
-                  {isSubmitting ? (
-                    <div className="flex items-center justify-center">
-                      <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin mr-2" />
-                      Subscribing...
-                    </div>
-                  ) : (
-                    signup.buttonText
-                  )}
-                </motion.button>
-
-                <p className="text-gray-400 text-sm">
-                  {signup.privacyText}
-                </p>
-              </form>
-            )}
+              </motion.button>
+            </form>
+            <p className="text-gray-400 text-sm mt-4">
+              {signup.privacyText}
+            </p>
           </motion.div>
 
           {/* Benefits */}

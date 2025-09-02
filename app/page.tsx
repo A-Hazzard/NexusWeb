@@ -462,7 +462,7 @@ export default function Home() {
             }}
             transition={{ duration: 10, repeat: Infinity, ease: "linear" }}
           />
-          
+
           <div className="container mx-auto px-4 relative z-10">
             <ScrollReveal className="text-center mb-20">
               <h2 className="text-4xl md:text-6xl font-bold text-white mb-8 leading-tight">
@@ -628,7 +628,7 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-[#FF8A00] hover:border-[#FF8A00] transition-all duration-300"
-                        whileHover={{ scale: 1.1 }}
+                    whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
@@ -637,8 +637,8 @@ export default function Home() {
                       </motion.a>
                     </div>
                   </div>
-                </div>
-              </ScrollReveal>
+                    </div>
+            </ScrollReveal>
             </div>
 
             {/* Newsletter Section - Now truly part of the same section */}
