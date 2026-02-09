@@ -176,7 +176,7 @@ export default function PerformancePage() {
                 onChange={(e) => setSelectedTimeframe(e.target.value)}
                 className="px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent"
               >
-                <option value="1d">Last 24 hours</option>
+                <option value="1d">Last 24 Hours</option>
                 <option value="7d">Last 7 days</option>
                 <option value="30d">Last 30 days</option>
                 <option value="90d">Last 90 days</option>

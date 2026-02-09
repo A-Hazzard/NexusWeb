@@ -589,7 +589,7 @@ export default function Home() {
                       <div>
                         <h4 className="text-lg font-semibold text-white mb-1">Phone</h4>
                         <p className="text-gray-300">+1 (868) 555-0123</p>
-                        <p className="text-gray-400 text-sm">Mon-Fri: 9AM-6PM AST</p>
+                        <p className="text-gray-400 text-sm">Mon-Fri: 9:30AM-6:00PM AST</p>
                       </div>
                     </div>
 
@@ -602,7 +602,7 @@ export default function Home() {
                       <div>
                         <h4 className="text-lg font-semibold text-white mb-1">Email</h4>
                         <p className="text-gray-300">info@nexusweb.tt</p>
-                        <p className="text-gray-400 text-sm">We&apos;ll respond within 24 hours</p>
+                        <p className="text-gray-400 text-sm">We&apos;ll respond within 2-4 Business Days</p>
                       </div>
                     </div>
 

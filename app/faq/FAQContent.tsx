@@ -135,7 +135,7 @@ const faqCategories: FAQCategory[] = [
       },
       {
         question: "How quickly do you respond to support requests?",
-        answer: "We typically respond to urgent issues within 2-4 hours, and non-urgent requests within 24 hours. Premium support clients get even faster response times."
+        answer: "We typically respond to urgent issues within 24 hours, and non-urgent requests within 2-4 Business Days. Premium support clients get even faster response times."
       },
       {
         question: "Do you provide content updates?",
