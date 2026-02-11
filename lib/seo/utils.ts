@@ -9,7 +9,7 @@ import type { ServiceSEO } from './types';
 // Enhanced sitemap URL generation with local SEO focus
 export function generateSitemapUrls() {
   const baseUrl = SITE_CONFIG.url;
-  
+
   return [
     {
       url: baseUrl,
