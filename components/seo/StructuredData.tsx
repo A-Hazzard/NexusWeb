@@ -12,7 +12,7 @@ import {
 } from '@/lib/seo/utils';
 
 interface StructuredDataProps {
-  pageType?: 'home' | 'about' | 'services' | 'portfolio' | 'contact';
+  pageType?: 'home' | 'about' | 'services' | 'portfolio' | 'contact' | 'blog';
   additionalData?: Record<string, unknown>[];
 }
 

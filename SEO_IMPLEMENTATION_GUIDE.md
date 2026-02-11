@@ -396,7 +396,6 @@ const LOCAL_SEO = {
 ### B. Development Tools
 ```bash
 # Next.js SEO packages
-npm install next-seo
 npm install @next/mdx
 npm install schema-dts
 

@@ -22,7 +22,8 @@ export const BUSINESS_INFO: BusinessInfo = {
   url: SITE_CONFIG.url,
   logo: `${SITE_CONFIG.url}/logo.png`,
   image: `${SITE_CONFIG.url}/logo.png`,
-  telephone: '+1-868-352-1435',
+  telephone: '+1 (868) 492-1566',
+  whatsapp: '+1 (868) 352-1435',
   email: 'nexuswebtt@gmail.com',
   address: {
     streetAddress: 'Remote Operations',
@@ -146,7 +147,7 @@ export const STRUCTURED_DATA_TEMPLATES = {
     currenciesAccepted: BUSINESS_INFO.currenciesAccepted,
     paymentAccepted: BUSINESS_INFO.paymentAccepted,
   },
-  
+
   website: {
     '@context': 'https://schema.org',
     '@type': 'WebSite',

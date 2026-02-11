@@ -5,7 +5,7 @@ import { useRef, ReactNode } from 'react'
 
 type ScrollRevealProps = {
   children: ReactNode
-  direction?: 'up' | 'down' | 'left' | 'right'
+  direction?: 'up' | 'down' | 'left' | 'right' | 'none'
   delay?: number
   duration?: number
   className?: string
@@ -16,6 +16,7 @@ const directionVariants = {
   down: { y: -60, opacity: 0 },
   left: { x: 60, opacity: 0 },
   right: { x: -60, opacity: 0 },
+  none: { opacity: 0 },
 }
 
 export default function ScrollReveal({

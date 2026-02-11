@@ -84,7 +84,7 @@ export async function POST(req: Request) {
           <div style="background: #f8f9fa; padding: 30px; border-radius: 0 0 10px 10px; border: 1px solid #e9ecef;">
             <div style="background: white; padding: 25px; border-radius: 8px; margin-bottom: 20px;">
               <h3 style="color: #FF8A00; margin: 0 0 15px 0;">Hi ${name}!</h3>
-              <p style="margin: 0 0 15px 0;">Thank you for contacting <strong>Nexus Web</strong>. We've received your message and will get back to you within 24 hours.</p>
+              <p style="margin: 0 0 15px 0;">Thank you for contacting <strong>Nexus Web</strong>. We've received your message and will get back to you within 2-4 Business Days.</p>
               
               <div style="background: #f8f9fa; padding: 20px; border-radius: 8px; border-left: 4px solid #FF8A00; margin: 20px 0;">
                 <h4 style="color: #FF4D00; margin: 0 0 10px 0;">What happens next?</h4>
@@ -102,7 +102,7 @@ export async function POST(req: Request) {
             <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
               <h4 style="color: #FF4D00; margin: 0 0 15px 0;">Contact Information</h4>
               <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:nexuswebtt@gmail.com" style="color: #FF8A00;">nexuswebtt@gmail.com</a></p>
-              <p style="margin: 5px 0;"><strong>Phone:</strong> <a href="tel:+18683521435" style="color: #FF8A00;">+1 (868) 352-1435</a></p>
+              <p style="margin: 5px 0;"><strong>Phone:</strong> <a href="tel:+18684921566" style="color: #FF8A00;">+1 (868) 492-1566 (Call)</a> / <a href="https://wa.me/18683521435" style="color: #FF8A00;">+1 (868) 352-1435 (WhatsApp)</a></p>
               <p style="margin: 5px 0;"><strong>Location:</strong> Trinidad & Tobago</p>
             </div>
             
@@ -124,18 +124,18 @@ export async function POST(req: Request) {
     await transporter.sendMail(autoReplyOptions);
 
     return NextResponse.json(
-      { 
-        message: 'Thank you for your message! We\'ll get back to you within 24 hours.',
-        success: true 
+      {
+        message: 'Thank you for your message! We\'ll get back to you within 2-4 Business Days.',
+        success: true
       },
       { status: 200 }
     );
   } catch (error) {
     console.error('Error sending email:', error);
     return NextResponse.json(
-      { 
+      {
         error: 'Sorry, there was an issue sending your message. Please try again or contact us directly at nexuswebtt@gmail.com',
-        success: false 
+        success: false
       },
       { status: 500 }
     );

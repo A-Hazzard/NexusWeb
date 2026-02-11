@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useBooking } from "@/lib/contexts/BookingContext";
 
 export function Navigation() {
+  const { openBooking } = useBooking();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -50,11 +52,17 @@ export function Navigation() {
               Services
             </Link>
             <Link
-              href="/contact"
-              className="bg-[#1a1a2e] text-white px-4 py-2 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300"
+              href="/blog"
+              className="text-gray-700 hover:text-[#FF8A00] transition-colors duration-300"
             >
-              Contact Us
+              Blog
             </Link>
+            <button
+              onClick={openBooking}
+              className="bg-[#1a1a2e] text-white px-4 py-2 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300 cursor-pointer"
+            >
+              Book Consultation
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -112,12 +120,21 @@ export function Navigation() {
                 Services
               </Link>
               <Link
-                href="/contact"
-                className="bg-[#1a1a2e] text-white px-4 py-2 mx-4 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300 text-center"
+                href="/blog"
+                className="text-gray-700 hover:text-[#FF8A00] transition-colors duration-300 px-4"
                 onClick={() => setIsMenuOpen(false)}
               >
-                Contact Us
+                Blog
               </Link>
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  openBooking();
+                }}
+                className="bg-[#1a1a2e] text-white px-4 py-2 mx-4 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300 text-center cursor-pointer"
+              >
+                Book Consultation
+              </button>
             </div>
           </div>
         )}

@@ -6,8 +6,11 @@ import { Footer } from './components/Footer'
 import { EnhancedStructuredData } from '@/components/seo/EnhancedStructuredData'
 import { WebVitals } from '@/components/seo/WebVitals'
 import { SITE_CONFIG, BUSINESS_INFO } from '@/lib/seo/config'
+import { AuthProvider } from '@/lib/contexts/AuthContext'
+import { BookingProvider } from '@/lib/contexts/BookingContext'
+import BookingModal from '@/components/ui/BookingModal'
 
-const inter = Inter({ 
+const inter = Inter({
   subsets: ['latin'],
   display: 'swap',
   preload: true,
@@ -120,7 +123,7 @@ export default function RootLayout({
   children: React.ReactNode
 }) {
   return (
-    <html lang="en" className="scroll-smooth">
+    <html lang="en" className="scroll-smooth" suppressHydrationWarning={true}>
       <head>
         <EnhancedStructuredData pageType="home" />
         <WebVitals analyticsId={process.env.NEXT_PUBLIC_GA_ID} />
@@ -140,12 +143,17 @@ export default function RootLayout({
         <meta name="business:contact_data:phone_number" content={BUSINESS_INFO.telephone} />
         <meta name="business:contact_data:email" content={BUSINESS_INFO.email} />
       </head>
-      <body className={`${inter.className} overflow-x-hidden`}>
-        <Navigation />
-        <div className="pt-20">
-          {children}
-        </div>
-        <Footer />
+      <body className={`${inter.className} overflow-x-hidden`} suppressHydrationWarning={true}>
+        <AuthProvider>
+          <BookingProvider>
+            <BookingModal />
+            <Navigation />
+            <div className="pt-20">
+              {children}
+            </div>
+            <Footer />
+          </BookingProvider>
+        </AuthProvider>
       </body>
     </html>
   )

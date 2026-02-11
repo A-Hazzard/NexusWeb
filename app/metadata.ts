@@ -135,13 +135,14 @@ export const portfolioPageSEO: PageSEO = {
 // Contact Page SEO
 export const contactPageSEO: PageSEO = {
   title: 'Contact Nexus Web - Get Your Free Web Development Quote Today',
-  description: 'Ready to transform your digital presence? Contact Nexus Web for a free consultation. Call +1 (868) 352-1435 or email nexuswebtt@gmail.com.',
+  description: 'Ready to transform your digital presence? Contact Nexus Web for a free consultation. Call +1 (868) 492-1566 or WhatsApp +1 (868) 352-1435.',
   keywords: [
     'contact Nexus Web',
     'web development quote',
     'free consultation',
     'Trinidad web developer',
     'nexuswebtt@gmail.com',
+    '+1 868 492 1566',
     '+1 868 352 1435',
     'get started',
     'web development inquiry',
