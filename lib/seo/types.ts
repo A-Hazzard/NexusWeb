@@ -33,6 +33,7 @@ export type BusinessInfo = {
   logo: string;
   image: string;
   telephone: string;
+  whatsapp?: string;
   email: string;
   address: {
     streetAddress: string;

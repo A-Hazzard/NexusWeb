@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, useScroll, useTransform } from "framer-motion";
@@ -10,6 +10,9 @@ import ScrollReveal from "@/components/animations/ScrollReveal";
 import MouseFollower3D from "@/components/animations/MouseFollower3D";
 import FloatingGeometry from "@/components/three/FloatingGeometry";
 import SmoothScroll from "@/components/ui/SmoothScroll";
+import { collection, getDocs, query, where, orderBy, limit } from "firebase/firestore";
+import { db } from "@/lib/firebase";
+import type { BlogPost } from "@/lib/types/business";
 
 // Import business components
 import { useBooking } from "@/lib/contexts/BookingContext";
@@ -44,11 +47,86 @@ export default function Home() {
   const { scrollYProgress } = useScroll();
   const backgroundY = useTransform(scrollYProgress, [0, 1], ["0%", "100%"]);
   const textY = useTransform(scrollYProgress, [0, 1], ["0%", "200%"]);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [formStatus, setFormStatus] = useState<{ type: 'success' | 'error' | null, message: string }>({ type: null, message: '' });
+  const [validationErrors, setValidationErrors] = useState<{ field: string, message: string }[]>([]);
+  const [fetchedBlogPosts, setFetchedBlogPosts] = useState<BlogPost[]>([]);
+
+  useEffect(() => {
+    const fetchPosts = async () => {
+      try {
+        const q = query(
+          collection(db, "posts"),
+          where("published", "==", true),
+          orderBy("date", "desc"),
+          limit(4)
+        );
+        const querySnapshot = await getDocs(q);
+        const posts = querySnapshot.docs.map(doc => ({
+          id: doc.id,
+          ...doc.data()
+        }));
+        setFetchedBlogPosts(posts as BlogPost[]);
+      } catch (error) {
+        console.error("Error fetching blog posts for preview:", error);
+      }
+    };
+    fetchPosts();
+  }, []);
 
   useEffect(() => {
     const cleanup = initPageAnimations(containerRef);
     return cleanup;
   }, []);
+
+  const handleContactSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setValidationErrors([]);
+    setFormStatus({ type: null, message: '' });
+
+    const form = e.currentTarget;
+    const formData = {
+      name: `${(form.elements.namedItem('firstName') as HTMLInputElement)?.value} ${(form.elements.namedItem('lastName') as HTMLInputElement)?.value}`.trim(),
+      email: (form.elements.namedItem('email') as HTMLInputElement)?.value || '',
+      phone: (form.elements.namedItem('phone') as HTMLInputElement)?.value || '',
+      service: (form.elements.namedItem('service') as HTMLSelectElement)?.value || '',
+      message: (form.elements.namedItem('message') as HTMLTextAreaElement)?.value || '',
+    };
+
+    const errors: { field: string, message: string }[] = [];
+    if (!formData.name) errors.push({ field: 'name', message: 'Name is required' });
+    if (!formData.email) errors.push({ field: 'email', message: 'Email is required' });
+    if (!formData.message) {
+      errors.push({ field: 'message', message: 'Message is required' });
+    } else if (formData.message.trim().length < 20) {
+      errors.push({ field: 'message', message: 'Please provide at least 20 characters about your project' });
+    }
+
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+
+    setIsSubmitting(true);
+    try {
+      const response = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const result = await response.json();
+      if (response.ok && result.success) {
+        setFormStatus({ type: 'success', message: 'Message sent successfully!' });
+        form.reset();
+      } else {
+        setFormStatus({ type: 'error', message: result.error || 'Failed to send message.' });
+      }
+    } catch {
+      setFormStatus({ type: 'error', message: 'Failed to send message. Please try again.' });
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
 
   return (
     <SmoothScroll>
@@ -168,7 +246,7 @@ export default function Home() {
                 >
                   <div className="text-center">
                     <div className="text-3xl font-bold text-[#FF8A00] mb-2">
-                      100+
+                      20+
                     </div>
                     <p className="text-gray-400 text-sm">Projects Delivered</p>
                   </div>
@@ -307,8 +385,9 @@ export default function Home() {
           clientLogos={clientLogos}
           testimonials={testimonials}
           stats={[
-            { number: "20+", label: "Projects Completed", description: "Successfully delivered" },
-            { number: "5+", label: "Years Experience", description: "In web development" }
+            { number: "100+", label: "Projects Delivered", description: "Successfully delivered" },
+            { number: "5+", label: "Years Experience", description: "In web development" },
+            { number: "24/7", label: "Expert Support", description: "Available anytime" }
           ]}
         />
 
@@ -430,7 +509,7 @@ export default function Home() {
 
         {/* Blog Preview Section */}
         <BlogPreview
-          posts={blogPosts}
+          posts={fetchedBlogPosts.length > 0 ? fetchedBlogPosts : blogPosts}
           categories={['Web Development', 'E-Commerce', 'SEO', 'Security', 'Design']}
         />
 
@@ -468,7 +547,7 @@ export default function Home() {
               <ScrollReveal>
                 <div>
                   <h3 className="text-2xl font-bold text-white mb-6">Get In Touch</h3>
-                  <form className="space-y-6">
+                  <form onSubmit={handleContactSubmit} className="space-y-6">
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div>
                         <label htmlFor="firstName" className="block text-sm font-medium text-gray-300 mb-2">
@@ -477,6 +556,8 @@ export default function Home() {
                         <input
                           type="text"
                           id="firstName"
+                          name="firstName"
+                          required
                           className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
                           placeholder="Your first name"
                         />
@@ -488,6 +569,8 @@ export default function Home() {
                         <input
                           type="text"
                           id="lastName"
+                          name="lastName"
+                          required
                           className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
                           placeholder="Your last name"
                         />
@@ -500,6 +583,8 @@ export default function Home() {
                       <input
                         type="email"
                         id="email"
+                        name="email"
+                        required
                         className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
                         placeholder="your.email@example.com"
                       />
@@ -511,8 +596,9 @@ export default function Home() {
                       <input
                         type="tel"
                         id="phone"
+                        name="phone"
                         className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
-                        placeholder="+1 (868) 555-0123"
+                        placeholder="+1 (868) 492-1566"
                       />
                     </div>
                     <div>
@@ -521,34 +607,49 @@ export default function Home() {
                       </label>
                       <select
                         id="service"
+                        name="service"
                         className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300"
                       >
-                        <option value="">Select a service</option>
-                        <option value="web-design">Web Design</option>
-                        <option value="ecommerce">E-Commerce Development</option>
-                        <option value="seo">SEO & Marketing</option>
-                        <option value="maintenance">Website Maintenance</option>
-                        <option value="consultation">Consultation</option>
+                        <option value="" className="text-gray-900">Select a service</option>
+                        <option value="web-design" className="text-gray-900">Web Design</option>
+                        <option value="ecommerce" className="text-gray-900">E-Commerce Development</option>
+                        <option value="seo" className="text-gray-900">SEO & Marketing</option>
+                        <option value="maintenance" className="text-gray-900">Website Maintenance</option>
+                        <option value="consultation" className="text-gray-900">Consultation</option>
                       </select>
                     </div>
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
-                        Project Details
+                        Project Details *
                       </label>
                       <textarea
                         id="message"
+                        name="message"
+                        required
                         rows={4}
-                        className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300 resize-none"
-                        placeholder="Tell us about your project, goals, and timeline..."
+                        className={`w-full px-4 py-3 bg-white/10 border rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300 resize-none ${validationErrors.find(e => e.field === 'message') ? 'border-red-500' : 'border-white/20'
+                          }`}
+                        placeholder="Tell us about your project, goals, and timeline (at least 20 characters)..."
                       />
+                      {validationErrors.find(e => e.field === 'message') && (
+                        <p className="mt-2 text-sm text-red-400">{validationErrors.find(e => e.field === 'message')?.message}</p>
+                      )}
                     </div>
+
+                    {formStatus.message && (
+                      <div className={`p-4 rounded-xl text-sm ${formStatus.type === 'success' ? 'bg-green-500/20 text-green-300' : 'bg-red-500/20 text-red-300'}`}>
+                        {formStatus.message}
+                      </div>
+                    )}
+
                     <motion.button
                       type="submit"
-                      className="w-full py-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
+                      disabled={isSubmitting}
+                      className="w-full py-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
                       whileHover={{ scale: 1.02 }}
                       whileTap={{ scale: 0.98 }}
                     >
-                      Send Message
+                      {isSubmitting ? 'Sending...' : 'Send Message'}
                     </motion.button>
                   </form>
                 </div>
@@ -573,8 +674,8 @@ export default function Home() {
                         </svg>
                       </div>
                       <div>
-                        <h4 className="text-lg font-semibold text-white mb-1">Phone</h4>
-                        <p className="text-gray-300">+1 (868) 555-0123</p>
+                        <h4 className="text-lg font-semibold text-white mb-1">Call / WhatsApp</h4>
+                        <p className="text-gray-300">+1 (868) 492-1566 / +1 (868) 352-1435</p>
                         <p className="text-gray-400 text-sm">Mon-Fri: 9:30AM-6:00PM AST</p>
                       </div>
                     </div>
@@ -587,7 +688,7 @@ export default function Home() {
                       </div>
                       <div>
                         <h4 className="text-lg font-semibold text-white mb-1">Email</h4>
-                        <p className="text-gray-300">info@nexusweb.tt</p>
+                        <p className="text-gray-300">nexuswebtt@gmail.com</p>
                         <p className="text-gray-400 text-sm">We&apos;ll respond within 2-4 Business Days</p>
                       </div>
                     </div>
@@ -600,7 +701,7 @@ export default function Home() {
                       </div>
                       <div>
                         <h4 className="text-lg font-semibold text-white mb-1">Location</h4>
-                        <p className="text-gray-300">Port of Spain, Trinidad & Tobago</p>
+                        <p className="text-gray-300">Trinidad & Tobago</p>
                         <p className="text-gray-400 text-sm">Serving the entire Caribbean</p>
                       </div>
                     </div>

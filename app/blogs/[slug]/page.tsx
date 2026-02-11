@@ -1,4 +1,4 @@
-import { collection, query, where, getDocs } from "firebase/firestore";
+import { collection, query, where, getDocs, limit, orderBy } from "firebase/firestore";
 import { db } from "@/lib/firebase";
 import BlogPostContent from "./BlogPostContent";
 
@@ -42,13 +42,46 @@ async function getPostBySlug(slug: string) {
   }
 }
 
+// Function to fetch related posts by category
+async function getRelatedPosts(category: string, currentSlug: string) {
+  try {
+    const q = query(
+      collection(db, "posts"),
+      where("category", "==", category),
+      where("published", "==", true),
+      orderBy("date", "desc"),
+      limit(3)
+    );
+    const querySnapshot = await getDocs(q);
+
+    return querySnapshot.docs
+      .map((doc) => {
+        const data = doc.data();
+        return {
+          id: doc.id,
+          title: data.title || "",
+          excerpt: data.excerpt || "",
+          category: data.category || "",
+          author: data.author || "",
+          date: data.date || "",
+          readTime: data.readTime || "",
+          image: data.image || "",
+          slug: data.slug || "",
+        };
+      })
+      .filter((post) => post.slug !== currentSlug); // Exclude current post
+  } catch (error) {
+    console.error("Error fetching related posts:", error);
+    return [];
+  }
+}
+
 export default async function BlogPostPage({ params }: BlogPostPageProps) {
   const { slug } = await params;
   const post = await getPostBySlug(slug);
 
-  // If no post found in DB, fallback to hardcoded data (for migration period)?
-  // OR just return null and let BlogPostContent handle the 404 state. 
-  // Given we are overhauling, let's stick to the DB.
+  // Fetch related posts if we have a post
+  const relatedPosts = post ? await getRelatedPosts(post.category, post.slug) : [];
 
-  return <BlogPostContent post={post} />;
+  return <BlogPostContent post={post} relatedPosts={relatedPosts} />;
 }

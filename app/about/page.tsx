@@ -66,9 +66,9 @@ const timelineItems: TimelineItemProps[] = [
 ]
 
 const stats = [
-  { id: 1, number: 5, label: 'Years of Experience', icon: 'calendar' },
-  { id: 3, number: 20, label: 'Projects Completed', icon: 'project-diagram' },
-  { id: 4, number: 100, label: 'Websites Optimized', icon: 'chart-line' }
+  { id: 1, number: '5+', label: 'Years Experience', icon: 'calendar' },
+  { id: 2, number: '100+', label: 'Projects Delivered', icon: 'project-diagram' },
+  { id: 3, number: '24/7', label: 'Expert Support', icon: 'headset' }
 ]
 
 export default function AboutPage() {
@@ -84,7 +84,7 @@ export default function AboutPage() {
     <SmoothScroll>
       <main ref={containerRef} className="select-none touch-pan-y overscroll-none">
         <StructuredData pageType="about" additionalData={[aboutStructuredData, breadcrumbStructuredData]} />
-        
+
         {/* Hero Section */}
         <section ref={heroRef} className="min-h-screen relative overflow-hidden bg-gradient-to-br from-[#0a0a1a] via-[#1a1a2e] to-[#16213e] flex items-center">
           <ParallaxSection speed={0.5}>
@@ -103,7 +103,7 @@ export default function AboutPage() {
                 transition={{ duration: 0.8, delay: 0.2 }}
                 className="text-center lg:text-left"
               >
-                <motion.h1 
+                <motion.h1
                   className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -111,8 +111,8 @@ export default function AboutPage() {
                 >
                   Meet <span className="bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] bg-clip-text text-transparent">Aaron Hazzard</span>
                 </motion.h1>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-xl md:text-2xl text-gray-300 mb-8"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -120,8 +120,8 @@ export default function AboutPage() {
                 >
                   Senior Software Engineer & Founder of Nexus Web
                 </motion.p>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-lg text-gray-400 mb-8 max-w-2xl"
                   initial={{ opacity: 0, y: 20 }}
                   animate={{ opacity: 1, y: 0 }}
@@ -143,7 +143,7 @@ export default function AboutPage() {
                     <span className="relative z-10">Get In Touch</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D00] to-[#FF8A00] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </Link>
-                  
+
                   <Link
                     href="/portfolio"
                     className="group px-8 py-4 border-2 border-[#FF8A00] text-[#FF8A00] font-semibold rounded-full transition-all duration-300 hover:bg-[#FF8A00] hover:text-white hover:scale-105"
@@ -170,7 +170,7 @@ export default function AboutPage() {
                         height={500}
                         className="w-full h-auto rounded-xl"
                       />
-                      
+
                       {/* Floating Achievement Badges */}
                       <motion.div
                         className="absolute -top-4 -right-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg"
@@ -179,7 +179,7 @@ export default function AboutPage() {
                       >
                         5+ Years Experience
                       </motion.div>
-                      
+
                       <motion.div
                         className="absolute -bottom-4 -left-4 bg-gradient-to-r from-blue-500 to-cyan-500 text-white px-4 py-2 rounded-full text-sm font-bold shadow-lg"
                         animate={{ y: [0, -8, 0] }}
@@ -220,9 +220,9 @@ export default function AboutPage() {
                     </MouseFollower3D>
                   </motion.div>
                 </div>
-                
+
                 <div className="order-1 lg:order-2">
-                  <motion.span 
+                  <motion.span
                     className="inline-block px-4 py-2 text-sm font-bold rounded-full bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white mb-6"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -230,8 +230,8 @@ export default function AboutPage() {
                   >
                     Our Mission
                   </motion.span>
-                  
-                  <motion.h2 
+
+                  <motion.h2
                     className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
@@ -239,15 +239,15 @@ export default function AboutPage() {
                   >
                     Empowering Caribbean <span className="text-[#FF8A00]">Businesses</span> Online
                   </motion.h2>
-                  
-                  <motion.p 
+
+                  <motion.p
                     className="text-lg text-gray-600 mb-8 leading-relaxed"
                     initial={{ opacity: 0, y: 20 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: 0.4 }}
                   >
-                    My mission is simple: to help Trinidad & Tobago businesses thrive in the digital world. 
-                    With deep technical expertise and understanding of the local market, I create web solutions 
+                    My mission is simple: to help Trinidad & Tobago businesses thrive in the digital world.
+                    With deep technical expertise and understanding of the local market, I create web solutions
                     that drive real results and connect Caribbean businesses with their customers.
                   </motion.p>
 
@@ -283,7 +283,7 @@ export default function AboutPage() {
           <div className="container mx-auto px-4">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <motion.span 
+                <motion.span
                   className="inline-block px-4 py-2 text-sm font-bold rounded-full bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -291,8 +291,8 @@ export default function AboutPage() {
                 >
                   My Journey
                 </motion.span>
-                
-                <motion.h2 
+
+                <motion.h2
                   className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -300,8 +300,8 @@ export default function AboutPage() {
                 >
                   From Vision to <span className="text-[#FF8A00]">Reality</span>
                 </motion.h2>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-xl text-gray-600 max-w-3xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -311,21 +311,21 @@ export default function AboutPage() {
                 </motion.p>
               </div>
             </ScrollReveal>
-            
+
             {/* Timeline items */}
             <div className="relative max-w-6xl mx-auto">
               <div className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 h-full w-1 bg-gradient-to-b from-[#FF8A00] to-[#FF4D00]" />
-              
+
               {timelineItems.map((item, index) => (
                 <ScrollReveal key={index} delay={index * 0.2}>
-                  <motion.div 
+                  <motion.div
                     className="timeline-item relative mb-12 md:mb-20"
                     initial={{ opacity: 0, y: 50 }}
                     whileInView={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, delay: index * 0.1 }}
                   >
                     {/* Timeline Dot */}
-                    <motion.div 
+                    <motion.div
                       className="absolute left-4 md:left-1/2 transform md:-translate-x-1/2 -mt-2"
                       whileHover={{ scale: 1.2 }}
                       transition={{ duration: 0.3 }}
@@ -339,7 +339,7 @@ export default function AboutPage() {
                     <div className={`flex flex-col ${index % 2 === 0 ? 'md:flex-row-reverse' : 'md:flex-row'} items-start md:items-center pl-16 md:pl-0`}>
                       <div className="w-full md:w-1/2" />
                       <div className={`w-full md:w-1/2 ${index % 2 === 0 ? 'md:pr-16' : 'md:pl-16'}`}>
-                        <motion.div 
+                        <motion.div
                           className="bg-white p-6 md:p-8 rounded-2xl shadow-xl border border-gray-200 hover:shadow-2xl transition-all duration-300"
                           whileHover={{ y: -5, scale: 1.02 }}
                           transition={{ duration: 0.3 }}
@@ -362,7 +362,7 @@ export default function AboutPage() {
           <div className="container mx-auto px-4">
             <ScrollReveal>
               <div className="text-center mb-16">
-                <motion.span 
+                <motion.span
                   className="inline-block px-4 py-2 text-sm font-bold rounded-full bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -370,8 +370,8 @@ export default function AboutPage() {
                 >
                   By The Numbers
                 </motion.span>
-                
-                <motion.h2 
+
+                <motion.h2
                   className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -379,8 +379,8 @@ export default function AboutPage() {
                 >
                   Proven <span className="text-[#FF8A00]">Results</span>
                 </motion.h2>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-xl text-gray-600 max-w-3xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -390,32 +390,32 @@ export default function AboutPage() {
                 </motion.p>
               </div>
             </ScrollReveal>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
               {stats.map((stat, index) => (
                 <ScrollReveal key={stat.id} delay={index * 0.1}>
-                  <motion.div 
+                  <motion.div
                     className="group bg-gradient-to-br from-white to-gray-50 p-8 rounded-2xl shadow-xl border border-gray-100 text-center hover:shadow-2xl transition-all duration-300"
                     whileHover={{ y: -10, scale: 1.05 }}
                     transition={{ duration: 0.3 }}
                   >
-                    <motion.div 
+                    <motion.div
                       className="w-20 h-20 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-full flex items-center justify-center mb-6 mx-auto group-hover:scale-110 transition-transform duration-300"
                       whileHover={{ rotate: 360 }}
                       transition={{ duration: 0.6 }}
                     >
                       <i className={`fas fa-${stat.icon} text-2xl text-white`} />
                     </motion.div>
-                    
-                    <motion.div 
+
+                    <motion.div
                       className="text-4xl md:text-5xl font-bold text-[#FF8A00] mb-3"
                       initial={{ opacity: 0, scale: 0.5 }}
                       whileInView={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.6, delay: 0.2 + index * 0.1 }}
                     >
-                      {stat.number}+
+                      {stat.number}
                     </motion.div>
-                    
+
                     <p className="text-gray-600 font-semibold">{stat.label}</p>
                   </motion.div>
                 </ScrollReveal>
@@ -436,7 +436,7 @@ export default function AboutPage() {
           <div className="container relative z-10 mx-auto px-4">
             <ScrollReveal>
               <div className="text-center max-w-4xl mx-auto">
-                <motion.h2 
+                <motion.h2
                   className="text-3xl md:text-4xl lg:text-5xl font-bold text-white mb-6"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -444,8 +444,8 @@ export default function AboutPage() {
                 >
                   Ready to Transform Your <span className="text-[#FF8A00]">Business</span>?
                 </motion.h2>
-                
-                <motion.p 
+
+                <motion.p
                   className="text-xl text-gray-300 mb-10 max-w-2xl mx-auto"
                   initial={{ opacity: 0, y: 20 }}
                   whileInView={{ opacity: 1, y: 0 }}
@@ -467,7 +467,7 @@ export default function AboutPage() {
                     <span className="relative z-10">Start Your Project</span>
                     <div className="absolute inset-0 bg-gradient-to-r from-[#FF4D00] to-[#FF8A00] opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   </Link>
-                  
+
                   <Link
                     href="/services"
                     className="group px-8 py-4 border-2 border-[#FF8A00] text-[#FF8A00] font-bold rounded-full transition-all duration-300 hover:bg-[#FF8A00] hover:text-white hover:scale-105"
@@ -488,7 +488,10 @@ export default function AboutPage() {
                   </div>
                   <div className="flex items-center gap-3">
                     <i className="fas fa-phone text-[#FF8A00]"></i>
-                    <span>+1 (868) 352-1435</span>
+                    <div className="flex flex-col">
+                      <a href="tel:+18684921566" className="hover:text-[#FF8A00] transition-colors">Call: +1 (868) 492-1566</a>
+                      <a href="https://wa.me/18683521435" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF8A00] transition-colors">WhatsApp: +1 (868) 352-1435</a>
+                    </div>
                   </div>
                 </motion.div>
               </div>

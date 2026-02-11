@@ -36,21 +36,23 @@ type ValidationError = {
 
 const validateForm = (data: ContactFormData): ValidationError[] => {
   const errors: ValidationError[] = []
-  
+
   if (!data.name.trim()) {
     errors.push({ field: 'name', message: 'Name is required' })
   }
-  
+
   if (!data.email.trim()) {
     errors.push({ field: 'email', message: 'Email is required' })
   } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(data.email)) {
     errors.push({ field: 'email', message: 'Please enter a valid email address' })
   }
-  
+
   if (!data.message.trim()) {
     errors.push({ field: 'message', message: 'Message is required' })
+  } else if (data.message.trim().length < 20) {
+    errors.push({ field: 'message', message: 'Please provide at least 20 characters about your project' })
   }
-  
+
   return errors
 }
 
@@ -70,7 +72,7 @@ export default function ContactPage() {
     e.preventDefault()
     setValidationErrors([])
     setFormStatus({ type: null, message: '' })
-    
+
     const form = e.currentTarget
     const formData: ContactFormData = {
       name: (form.elements.namedItem('name') as HTMLInputElement)?.value || '',
@@ -79,13 +81,13 @@ export default function ContactPage() {
       service: (form.elements.namedItem('service') as HTMLSelectElement)?.value || '',
       message: (form.elements.namedItem('message') as HTMLTextAreaElement)?.value || '',
     }
-    
+
     const errors = validateForm(formData)
     if (errors.length > 0) {
       setValidationErrors(errors)
       return
     }
-    
+
     setIsSubmitting(true)
 
     try {
@@ -145,7 +147,7 @@ export default function ContactPage() {
               >
                 <span className="text-[#FF8A00] font-semibold text-lg">💬 Get In Touch</span>
               </motion.div>
-              
+
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -157,7 +159,7 @@ export default function ContactPage() {
                   Amazing Together
                 </span>
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -189,11 +191,10 @@ export default function ContactPage() {
                         id="name"
                         name="name"
                         required
-                        className={`w-full px-6 py-4 bg-white/10 backdrop-blur-sm border rounded-xl transition-all duration-300 text-white placeholder-gray-400 ${
-                          validationErrors.find(e => e.field === 'name')
-                            ? 'border-red-500 focus:ring-red-500'
-                            : 'border-white/20 focus:ring-[#FF8A00] focus:border-[#FF8A00]'
-                        }`}
+                        className={`w-full px-6 py-4 bg-white/10 backdrop-blur-sm border rounded-xl transition-all duration-300 text-white placeholder-gray-400 ${validationErrors.find(e => e.field === 'name')
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-white/20 focus:ring-[#FF8A00] focus:border-[#FF8A00]'
+                          }`}
                         placeholder="Your full name"
                       />
                       {validationErrors.find(e => e.field === 'name') && (
@@ -214,11 +215,10 @@ export default function ContactPage() {
                         id="email"
                         name="email"
                         required
-                        className={`w-full px-6 py-4 bg-white/10 backdrop-blur-sm border rounded-xl transition-all duration-300 text-white placeholder-gray-400 ${
-                          validationErrors.find(e => e.field === 'email')
-                            ? 'border-red-500 focus:ring-red-500'
-                            : 'border-white/20 focus:ring-[#FF8A00] focus:border-[#FF8A00]'
-                        }`}
+                        className={`w-full px-6 py-4 bg-white/10 backdrop-blur-sm border rounded-xl transition-all duration-300 text-white placeholder-gray-400 ${validationErrors.find(e => e.field === 'email')
+                          ? 'border-red-500 focus:ring-red-500'
+                          : 'border-white/20 focus:ring-[#FF8A00] focus:border-[#FF8A00]'
+                          }`}
                         placeholder="your@email.com"
                       />
                       {validationErrors.find(e => e.field === 'email') && (
@@ -275,11 +275,10 @@ export default function ContactPage() {
                       name="message"
                       required
                       rows={6}
-                      className={`w-full px-6 py-4 bg-white/10 backdrop-blur-sm border rounded-xl transition-all duration-300 text-white placeholder-gray-400 resize-none ${
-                        validationErrors.find(e => e.field === 'message')
-                          ? 'border-red-500 focus:ring-red-500'
-                          : 'border-white/20 focus:ring-[#FF8A00] focus:border-[#FF8A00]'
-                      }`}
+                      className={`w-full px-6 py-4 bg-white/10 backdrop-blur-sm border rounded-xl transition-all duration-300 text-white placeholder-gray-400 resize-none ${validationErrors.find(e => e.field === 'message')
+                        ? 'border-red-500 focus:ring-red-500'
+                        : 'border-white/20 focus:ring-[#FF8A00] focus:border-[#FF8A00]'
+                        }`}
                       placeholder="Tell us about your project, goals, timeline, and any specific requirements..."
                     />
                     {validationErrors.find(e => e.field === 'message') && (
@@ -294,11 +293,10 @@ export default function ContactPage() {
                     <motion.div
                       initial={{ opacity: 0, scale: 0.95 }}
                       animate={{ opacity: 1, scale: 1 }}
-                      className={`p-6 rounded-xl border ${
-                        formStatus.type === 'success'
-                          ? 'bg-green-500/10 border-green-500/20 text-green-400'
-                          : 'bg-red-500/10 border-red-500/20 text-red-400'
-                      }`}
+                      className={`p-6 rounded-xl border ${formStatus.type === 'success'
+                        ? 'bg-green-500/10 border-green-500/20 text-green-400'
+                        : 'bg-red-500/10 border-red-500/20 text-red-400'
+                        }`}
                     >
                       <div className="flex items-center">
                         {formStatus.type === 'success' ? (
@@ -367,7 +365,7 @@ export default function ContactPage() {
               </p>
             </ScrollReveal>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 md:gap-8 max-w-7xl mx-auto">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-8 max-w-4xl mx-auto">
               {([
                 {
                   icon: "M3 8l7.89 4.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z",
@@ -379,31 +377,31 @@ export default function ContactPage() {
                   isInstagram: false
                 },
                 {
-                  icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z",
-                  title: "Call Us",
-                  info: "+1 (868) 352-1435",
-                  description: "Call us during business hours (9 AM - 6 PM AST) for immediate assistance.",
-                  link: "tel:+18683521435",
-                  isEmail: false,
-                  isInstagram: false
-                },
-                {
-                  icon: "M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z M15 11a3 3 0 11-6 0 3 3 0 016 0z",
-                  title: "Visit Us",
-                  info: "Trinidad & Tobago",
-                  description: "Based in the beautiful twin-island nation, serving the entire Caribbean region.",
-                  link: "#",
-                  isEmail: false,
-                  isInstagram: false
-                },
-                {
                   icon: "",
                   title: "Follow Us",
                   info: "@nexuswebtt",
-                  description: "Follow us on Instagram for updates, behind-the-scenes content, and our latest work.",
+                  description: "Follow us on Instagram for updates and our latest work.",
                   link: "https://www.instagram.com/nexuswebtt/",
                   isEmail: false,
                   isInstagram: true
+                },
+                {
+                  icon: "M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z",
+                  title: "Call Us",
+                  info: "+1 (868) 492-1566",
+                  description: "Call us during business hours (9 AM - 6 PM AST) for immediate assistance.",
+                  link: "tel:+18684921566",
+                  isEmail: false,
+                  isInstagram: false
+                },
+                {
+                  icon: "M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z",
+                  title: "WhatsApp Us",
+                  info: "+1 (868) 352-1435",
+                  description: "Message us on WhatsApp for quick queries and project discussions.",
+                  link: "https://wa.me/18683521435",
+                  isEmail: false,
+                  isInstagram: false
                 }
               ] as const).map((contact, index) => (
                 <ScrollReveal key={index} delay={0.1 * index}>
@@ -414,7 +412,7 @@ export default function ContactPage() {
                     <div className="w-16 h-16 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg">
                       {contact.isInstagram ? (
                         <svg className="w-8 h-8 text-white" fill="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                       ) : (
                         <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -422,31 +420,20 @@ export default function ContactPage() {
                         </svg>
                       )}
                     </div>
-                    
+
                     <h3 className="text-xl font-bold text-gray-900 mb-3">{contact.title}</h3>
-                    
-                    {contact.link !== "#" ? (
-                      <a 
-                        href={contact.link}
-                        {...(contact.isInstagram ? { target: "_blank", rel: "noopener noreferrer" } : {})}
-                        className={`font-bold text-[#FF8A00] hover:text-[#FF4D00] transition-colors mb-4 block break-all ${
-                          contact.isEmail 
-                            ? 'text-base md:text-lg lg:text-xl leading-tight' 
-                            : 'text-lg md:text-xl lg:text-2xl'
+
+                    <a
+                      href={contact.link}
+                      {...(contact.isInstagram ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                      className={`font-bold text-[#FF8A00] hover:text-[#FF4D00] transition-colors mb-4 block break-all ${contact.isEmail
+                        ? 'text-base md:text-lg lg:text-xl leading-tight'
+                        : 'text-lg md:text-xl lg:text-2xl'
                         }`}
-                      >
-                        {contact.info}
-                      </a>
-                    ) : (
-                      <div className={`font-bold text-[#FF8A00] mb-4 break-all ${
-                        contact.isEmail 
-                          ? 'text-base md:text-lg lg:text-xl leading-tight' 
-                          : 'text-lg md:text-xl lg:text-2xl'
-                      }`}>
-                        {contact.info}
-                      </div>
-                    )}
-                    
+                    >
+                      {contact.info}
+                    </a>
+
                     <p className="text-gray-600 leading-relaxed">{contact.description}</p>
                   </motion.div>
                 </ScrollReveal>

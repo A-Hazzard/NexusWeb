@@ -28,20 +28,39 @@ export default function NewsletterSignup({
   const [email, setEmail] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSubmitted, setIsSubmitted] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
-    
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1000));
-    
-    setIsSubmitting(false);
-    setIsSubmitted(true);
-    setEmail("");
-    
-    // Reset after 3 seconds
-    setTimeout(() => setIsSubmitted(false), 3000);
+    setError("");
+
+    try {
+      const response = await fetch("/api/newsletter/subscribe", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          email,
+          source: "footer"
+        }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok) {
+        setIsSubmitted(true);
+        setEmail("");
+
+        // Reset after 5 seconds
+        setTimeout(() => setIsSubmitted(false), 5000);
+      } else {
+        setError(data.error || "Failed to subscribe. Please try again.");
+      }
+    } catch {
+      setError("Something went wrong. Please try again.");
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -122,6 +141,11 @@ export default function NewsletterSignup({
                 )}
               </motion.button>
             </form>
+            {error && (
+              <p className="text-red-400 text-sm mt-4">
+                {error}
+              </p>
+            )}
             <p className="text-gray-400 text-sm mt-4">
               {signup.privacyText}
             </p>

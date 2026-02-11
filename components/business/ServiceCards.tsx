@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
+import { useBooking } from "@/lib/contexts/BookingContext";
 import { ServicePackage, ServiceFeature } from "@/lib/types/business";
 import ScrollReveal from "@/components/animations/ScrollReveal";
 
@@ -23,6 +24,7 @@ export default function ServiceCards({
   description = "From stunning websites to powerful digital marketing, we provide everything your Trinidad & Tobago business needs to succeed online.",
   className = "",
 }: ServiceCardsProps) {
+  const { openBooking } = useBooking();
   const getServiceIcon = (category: string) => {
     const icons = {
       'web-development': 'M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z',
@@ -72,12 +74,12 @@ export default function ServiceCards({
           {services.map((service, index) => (
             <ScrollReveal key={service.id} delay={0.1 * index}>
               <motion.div
-                className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-500 border border-gray-100 overflow-hidden"
+                className="group relative bg-white rounded-3xl p-8 shadow-lg hover:shadow-2xl transition-all duration-300 border border-gray-100" // Removed overflow-hidden to allow tooltips to pop out
                 whileHover={{ y: -10, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
                 <motion.div
-                  className={`absolute inset-0 bg-gradient-to-r ${getServiceColor(service.category)} opacity-0 group-hover:opacity-5 transition-opacity duration-500`}
+                  className={`absolute inset-0 bg-gradient-to-r ${getServiceColor(service.category)} opacity-0 group-hover:opacity-5 transition-opacity duration-500 rounded-3xl`} // Added rounded-3xl
                 />
 
                 <div className="relative z-10">
@@ -138,8 +140,10 @@ export default function ServiceCards({
                   </p>
 
                   {/* Features */}
-                  <div className="mb-6">
-                    <h4 className="text-sm font-semibold text-gray-900 mb-3">What&apos;s Included:</h4>
+                  <div className="mb-6 relative">
+                    <h4 className="text-sm font-semibold text-gray-900 mb-3 flex items-center justify-between">
+                      What&apos;s Included:
+                    </h4>
                     <ul className="space-y-2">
                       {service.features.slice(0, 4).map((feature, i) => (
                         <motion.li
@@ -154,8 +158,27 @@ export default function ServiceCards({
                         </motion.li>
                       ))}
                       {service.features.length > 4 && (
-                        <li className="text-sm text-gray-500 ml-5">
-                          +{service.features.length - 4} more features
+                        <li className="relative group/more">
+                          <button className="text-sm text-[#FF8A00] font-semibold ml-5 hover:underline cursor-pointer flex items-center">
+                            +{service.features.length - 4} more features
+                            <svg className="w-4 h-4 ml-1 transform group-hover/more:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+                            </svg>
+                          </button>
+
+                          {/* Tooltip for Features - Shows only the hidden features */}
+                          <div className="absolute left-0 bottom-full mb-3 w-64 bg-gray-900 rounded-2xl p-4 shadow-2xl border border-white/10 opacity-0 invisible group-hover/more:opacity-100 group-hover/more:visible group-focus-within/more:opacity-100 group-focus-within/more:visible transition-all duration-300 z-[100]">
+                            <h5 className="text-[10px] font-bold text-orange-400 uppercase tracking-widest mb-3">Additional Features</h5>
+                            <ul className="space-y-2">
+                              {service.features.slice(4).map((feature, i) => (
+                                <li key={i} className="flex items-center text-xs text-gray-200">
+                                  <div className="w-1.5 h-1.5 rounded-full mr-2 bg-orange-400" />
+                                  {feature}
+                                </li>
+                              ))}
+                            </ul>
+                            <div className="absolute bottom-[-6px] left-10 w-3 h-3 bg-gray-900 rotate-45" />
+                          </div>
                         </li>
                       )}
                     </ul>
@@ -168,41 +191,50 @@ export default function ServiceCards({
                       {service.technologies.slice(0, 3).map((tech, i) => (
                         <span
                           key={i}
-                          className="px-3 py-1 bg-gray-100 text-gray-700 text-xs rounded-full font-medium"
+                          className="px-3 py-1 bg-gray-50 text-gray-700 text-xs rounded-full font-medium border border-gray-200"
                         >
                           {tech}
                         </span>
                       ))}
                       {service.technologies.length > 3 && (
-                        <span className="px-3 py-1 bg-gray-100 text-gray-500 text-xs rounded-full">
-                          +{service.technologies.length - 3}
-                        </span>
+                        <div className="relative group/tech">
+                          <button className="px-3 py-1 bg-gradient-to-r from-gray-50 to-gray-100 text-[#FF8A00] text-xs rounded-full font-bold cursor-pointer border border-orange-100 focus:outline-none">
+                            +{service.technologies.length - 3} more
+                          </button>
+
+                          {/* Tooltip for Technologies - Shows only the hidden techs */}
+                          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-3 w-48 bg-gray-900 rounded-xl p-3 shadow-2xl opacity-0 invisible group-hover/tech:opacity-100 group-hover/tech:visible group-focus-within/tech:opacity-100 group-focus-within/tech:visible transition-all duration-300 z-[100]">
+                            <div className="flex flex-wrap gap-1.5">
+                              {service.technologies.slice(3).map((tech, i) => (
+                                <span key={i} className="px-2 py-0.5 text-[10px] rounded-md bg-[#FF8A00]/20 text-[#FF8A00] border border-[#FF8A00]/30">
+                                  {tech}
+                                </span>
+                              ))}
+                            </div>
+                            <div className="absolute bottom-[-4px] left-1/2 -translate-x-1/2 w-2 h-2 bg-gray-900 rotate-45" />
+                          </div>
+                        </div>
                       )}
                     </div>
                   </div>
 
 
 
-                  {/* CTA Button */}
-                  <Link
-                    href="/contact"
-                    className={`w-full inline-flex items-center justify-center px-6 py-3 bg-gradient-to-r ${getServiceColor(service.category)} text-white rounded-xl font-semibold transition-all duration-300 hover:shadow-lg hover:scale-105`}
-                  >
-                    Get Started
-                    <svg
-                      className="w-5 h-5 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  {/* CTA Buttons */}
+                  <div className="flex flex-col sm:flex-row gap-4 mt-auto">
+                    <Link
+                      href="/contact"
+                      className={`flex-1 inline-flex items-center justify-center px-4 py-4 bg-gradient-to-r ${getServiceColor(service.category)} text-white rounded-xl font-bold transition-all duration-300 hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] text-sm`}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </Link>
+                      Get In Touch
+                    </Link>
+                    <button
+                      onClick={openBooking}
+                      className="flex-1 inline-flex items-center justify-center px-4 py-4 bg-white border-2 border-gray-100 text-gray-900 rounded-xl font-bold transition-all duration-300 hover:border-gray-200 hover:bg-gray-50 active:scale-[0.98] cursor-pointer text-sm"
+                    >
+                      Book a Call
+                    </button>
+                  </div>
                 </div>
               </motion.div>
             </ScrollReveal>

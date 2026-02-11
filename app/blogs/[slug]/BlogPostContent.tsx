@@ -4,6 +4,8 @@ import { useEffect, useRef } from 'react'
 import Link from 'next/link'
 import Image from 'next/image'
 import { motion } from 'framer-motion'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
 import { initPageAnimations } from '@/lib/utils/animations'
 import ScrollReveal from '@/components/animations/ScrollReveal'
 import ParallaxSection from '@/components/animations/ParallaxSection'
@@ -43,11 +45,24 @@ interface BlogPost {
   readTime: string;
 }
 
-interface BlogPostContentProps {
-  post: BlogPost | null;
+interface RelatedPost {
+  id: string;
+  title: string;
+  excerpt: string;
+  category: string;
+  author: string;
+  date: string;
+  readTime: string;
+  image: string;
+  slug: string;
 }
 
-export default function BlogPostContent({ post }: BlogPostContentProps) {
+interface BlogPostContentProps {
+  post: BlogPost | null;
+  relatedPosts?: RelatedPost[];
+}
+
+export default function BlogPostContent({ post, relatedPosts = [] }: BlogPostContentProps) {
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -73,6 +88,17 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
   const safeContent = decodeHTMLEntities(post.content);
   const safeTitle = decodeHTMLEntities(post.title);
   const safeExcerpt = decodeHTMLEntities(post.excerpt);
+
+  // Smart markdown detection: check if content starts with ```md OR starts with #
+  const trimmedContent = safeContent.trim();
+  const startsWithMarkdownPrefix = trimmedContent.startsWith('```md');
+  const startsWithMarkdownHeading = trimmedContent.startsWith('#');
+  const isMarkdownContent = startsWithMarkdownPrefix || startsWithMarkdownHeading;
+
+  // Process content: strip ```md prefix if present, otherwise use as-is
+  const processedContent = startsWithMarkdownPrefix
+    ? trimmedContent.replace(/^```md\n?/, '').replace(/```$/, '').trim()
+    : trimmedContent;
 
   // Generate structured data for the blog post
   const articleStructuredData = generateArticleStructuredData({
@@ -191,10 +217,18 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
             <div className="max-w-4xl mx-auto">
               <ScrollReveal>
                 <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-8 md:p-12">
-                  <article
-                    className="prose prose-lg md:prose-xl max-w-none nexus-blog-content prose-orange"
-                    dangerouslySetInnerHTML={{ __html: safeContent }}
-                  />
+                  {isMarkdownContent ? (
+                    <article className="prose prose-lg md:prose-xl max-w-none nexus-blog-content prose-orange">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                        {processedContent}
+                      </ReactMarkdown>
+                    </article>
+                  ) : (
+                    <article
+                      className="prose prose-lg md:prose-xl max-w-none nexus-blog-content prose-orange"
+                      dangerouslySetInnerHTML={{ __html: processedContent }}
+                    />
+                  )}
                 </div>
               </ScrollReveal>
             </div>
@@ -228,6 +262,7 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           .nexus-blog-content p {
             margin-bottom: 1.5rem;
             line-height: 1.8;
+            font-size: 1.125rem;
           }
           .nexus-blog-content ul {
             list-style-type: disc !important;
@@ -241,10 +276,15 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
           }
           .nexus-blog-content li {
             margin-bottom: 0.5rem;
+            line-height: 1.75;
           }
           .nexus-blog-content strong {
             font-weight: 700;
             color: #111827;
+          }
+          .nexus-blog-content em {
+            font-style: italic;
+            color: #4b5563;
           }
           .nexus-blog-content blockquote {
             border-left: 4px solid #FF8A00 !important;
@@ -252,6 +292,35 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
             font-style: italic !important;
             color: #4b5563 !important;
             margin: 2rem 0 !important;
+          }
+          .nexus-blog-content pre {
+            background-color: #1f2937 !important;
+            color: #f9fafb !important;
+            padding: 1.5rem !important;
+            border-radius: 0.75rem !important;
+            overflow-x: auto !important;
+            margin: 2rem 0 !important;
+            font-family: 'Courier New', monospace !important;
+            font-size: 0.875rem !important;
+            line-height: 1.7 !important;
+          }
+          .nexus-blog-content code {
+            background-color: #f3f4f6;
+            color: #e11d48;
+            padding: 0.2rem 0.4rem;
+            border-radius: 0.25rem;
+            font-family: 'Courier New', monospace;
+            font-size: 0.875em;
+          }
+          .nexus-blog-content pre code {
+            background-color: transparent !important;
+            color: #f9fafb !important;
+            padding: 0 !important;
+          }
+          .nexus-blog-content hr {
+            border: none !important;
+            border-top: 2px solid #e5e7eb !important;
+            margin: 3rem 0 !important;
           }
           .nexus-blog-content img {
             max-width: 100% !important;
@@ -273,6 +342,61 @@ export default function BlogPostContent({ post }: BlogPostContentProps) {
             border: 1px solid rgba(0,0,0,0.05);
           }
         `}</style>
+
+        {/* Related Articles */}
+        {relatedPosts && relatedPosts.length > 0 && (
+          <section className="py-20 bg-white">
+            <div className="container mx-auto px-4">
+              <div className="max-w-6xl mx-auto">
+                <ScrollReveal>
+                  <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    Related Articles
+                  </h2>
+                  <p className="text-gray-600 mb-12">
+                    More articles in <span className="text-[#FF8A00] font-semibold">{post.category}</span>
+                  </p>
+                </ScrollReveal>
+
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  {relatedPosts.map((relatedPost) => (
+                    <ScrollReveal key={relatedPost.id}>
+                      <Link href={`/blogs/${relatedPost.slug}`}>
+                        <div className="bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-300 hover:-translate-y-2 group h-full flex flex-col">
+                          <div className="relative h-48 overflow-hidden">
+                            <Image
+                              src={relatedPost.image}
+                              alt={relatedPost.title}
+                              width={400}
+                              height={250}
+                              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-300"
+                            />
+                            <div className="absolute top-4 left-4">
+                              <span className="px-4 py-2 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white text-sm font-semibold rounded-full">
+                                {relatedPost.category}
+                              </span>
+                            </div>
+                          </div>
+                          <div className="p-6 flex-1 flex flex-col">
+                            <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-[#FF8A00] transition-colors line-clamp-2">
+                              {relatedPost.title}
+                            </h3>
+                            <p className="text-gray-600 mb-4 line-clamp-3 flex-1">
+                              {relatedPost.excerpt}
+                            </p>
+                            <div className="flex items-center justify-between text-sm text-gray-500 pt-4 border-t border-gray-100">
+                              <span>{relatedPost.date}</span>
+                              <span>{relatedPost.readTime} read</span>
+                            </div>
+                          </div>
+                        </div>
+                      </Link>
+                    </ScrollReveal>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </section>
+        )}
 
         {/* Author Bio */}
         <section className="py-20 bg-gray-50">

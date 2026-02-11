@@ -21,7 +21,7 @@ type TrustIndicatorsProps = {
 
 export default function TrustIndicators({
   indicators,
-  clientLogos, // eslint-disable-line @typescript-eslint/no-unused-vars
+  clientLogos,
   testimonials = [],
   stats,
   title = "Trusted by Businesses",
@@ -42,11 +42,11 @@ export default function TrustIndicators({
 
         {/* Client Testimonials Slider */}
         {testimonials.length > 0 && (
-          <ScrollReveal className="mb-16">
+          <ScrollReveal direction="none" className="mb-16">
             <div className="relative overflow-hidden">
-              <div className="flex animate-scroll">
-                {[...testimonials.slice(0, 3), ...testimonials.slice(0, 3)].map((testimonial, index) => (
-                  <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 mx-4">
+              <div className="flex flex-nowrap animate-scroll">
+                {[...testimonials, ...testimonials].map((testimonial, index) => (
+                  <div key={`${testimonial.id}-${index}`} className="flex-shrink-0 mx-4" style={{ backfaceVisibility: 'hidden' }}>
                     <div className="bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-300 w-80">
                       <div className="flex items-center mb-4">
                         <div className="w-12 h-12 rounded-full overflow-hidden mr-4">
@@ -78,7 +78,23 @@ export default function TrustIndicators({
           </ScrollReveal>
         )}
 
-        {/* Trust Indicators */}
+        {/* Client Logos Strip */}
+        {clientLogos.length > 0 && (
+          <ScrollReveal className="mb-20">
+            <div className="flex flex-wrap justify-center items-center gap-12 md:gap-20 opacity-60 hover:opacity-100 transition-opacity duration-500">
+              {clientLogos.map((logo) => (
+                <div key={logo.id} className="relative w-32 h-12 grayscale hover:grayscale-0 transition-all duration-300">
+                  <Image
+                    src={logo.image}
+                    alt={logo.name}
+                    fill
+                    className="object-contain"
+                  />
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        )}
         <div className="flex flex-wrap justify-center gap-8 mb-16">
           {indicators.map((indicator, index) => (
             <ScrollReveal key={indicator.id} delay={0.1 * index}>

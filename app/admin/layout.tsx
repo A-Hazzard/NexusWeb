@@ -69,6 +69,13 @@ export default function AdminLayout({
           >
             Create New Post
           </Link>
+          <Link
+            href="/admin/newsletter"
+            className={`block px-6 py-3 text-gray-700 hover:bg-gray-100 ${pathname?.startsWith("/admin/newsletter") ? "bg-gray-100 font-semibold" : ""
+              }`}
+          >
+            📧 Newsletter
+          </Link>
           <div className="px-6 py-3 mt-auto">
             <button
               onClick={() => signOut(auth)}
