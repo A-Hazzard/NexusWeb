@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useState } from "react";
 import { PricingTier } from "@/lib/types/business";
 import ScrollReveal from "@/components/animations/ScrollReveal";
+import { useBooking } from "@/lib/contexts/BookingContext";
 
 type PricingCardsProps = {
   tiers: PricingTier[];
@@ -21,6 +22,7 @@ export default function PricingCards({
   description = "No hidden fees, no surprises. Choose the plan that fits your business needs and budget.",
   className = "",
 }: PricingCardsProps) {
+  const { openBooking } = useBooking();
   const [openFAQ, setOpenFAQ] = useState<number | null>(null);
   return (
     <section className={`py-32 bg-gradient-to-b from-white to-gray-50 relative overflow-hidden ${className}`}>
@@ -51,11 +53,10 @@ export default function PricingCards({
           {tiers.map((tier, index) => (
             <ScrollReveal key={tier.id} delay={0.1 * index}>
               <motion.div
-                className={`group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 ${
-                  tier.popular 
-                    ? 'border-[#FF8A00] scale-105' 
+                className={`group relative bg-white rounded-3xl p-8 shadow-xl hover:shadow-2xl transition-all duration-500 border-2 ${tier.popular
+                    ? 'border-[#FF8A00] scale-105'
                     : 'border-gray-100 hover:border-gray-200'
-                }`}
+                  }`}
                 whileHover={{ y: -8, scale: tier.popular ? 1.05 : 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -132,29 +133,53 @@ export default function PricingCards({
                   )}
 
                   {/* CTA Button */}
-                  <Link
-                    href={tier.ctaLink}
-                    className={`w-full inline-flex items-center justify-center px-6 py-4 rounded-xl font-semibold transition-all duration-300 ${
-                      tier.popular
-                        ? 'bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white hover:shadow-lg hover:scale-105'
-                        : 'bg-gray-100 text-gray-900 hover:bg-gray-200 hover:scale-105'
-                    }`}
-                  >
-                    {tier.ctaText}
-                    <svg
-                      className="w-5 h-5 ml-2"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
+                  {tier.ctaLink === '#book-consultation' ? (
+                    <button
+                      onClick={openBooking}
+                      className={`w-full inline-flex items-center justify-center px-6 py-4 rounded-xl font-semibold transition-all duration-300 cursor-pointer ${tier.popular
+                          ? 'bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white hover:shadow-lg hover:scale-105'
+                          : 'bg-gray-100 text-gray-900 hover:bg-gray-200 hover:scale-105'
+                        }`}
                     >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M13 7l5 5m0 0l-5 5m5-5H6"
-                      />
-                    </svg>
-                  </Link>
+                      {tier.ctaText}
+                      <svg
+                        className="w-5 h-5 ml-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </button>
+                  ) : (
+                    <Link
+                      href={tier.ctaLink}
+                      className={`w-full inline-flex items-center justify-center px-6 py-4 rounded-xl font-semibold transition-all duration-300 ${tier.popular
+                          ? 'bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white hover:shadow-lg hover:scale-105'
+                          : 'bg-gray-100 text-gray-900 hover:bg-gray-200 hover:scale-105'
+                        }`}
+                    >
+                      {tier.ctaText}
+                      <svg
+                        className="w-5 h-5 ml-2"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M13 7l5 5m0 0l-5 5m5-5H6"
+                        />
+                      </svg>
+                    </Link>
+                  )}
                 </div>
               </motion.div>
             </ScrollReveal>
@@ -234,7 +259,7 @@ export default function PricingCards({
                 </motion.div>
               ))}
             </div>
-            
+
             {/* View More FAQs Button */}
             <motion.div
               className="mt-8"

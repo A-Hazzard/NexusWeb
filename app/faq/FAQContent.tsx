@@ -49,10 +49,6 @@ const faqCategories: FAQCategory[] = [
     icon: "💰",
     faqs: [
       {
-        question: "What are your pricing plans?",
-        answer: "We offer transparent pricing with three main tiers: Starter ($999), Professional ($1,999), and Enterprise ($3,999). Each plan includes different features and support levels. Custom solutions are also available."
-      },
-      {
         question: "Do you offer payment plans?",
         answer: "Yes! We offer flexible payment plans with 50% upfront and the remainder upon completion. We also accept monthly payments for ongoing services."
       },
@@ -62,11 +58,7 @@ const faqCategories: FAQCategory[] = [
       },
       {
         question: "What payment methods do you accept?",
-        answer: "We accept all major credit cards, PayPal, bank transfers, and local payment methods. All payments are processed securely through Stripe."
-      },
-      {
-        question: "Do you offer discounts for non-profits or startups?",
-        answer: "Yes! We offer special pricing for non-profit organizations, startups, and small businesses. Contact us to discuss your specific needs and budget."
+        answer: "We accept bank transfers, PayPal, and local payment methods. All payments are processed securely."
       }
     ]
   },
@@ -232,7 +224,7 @@ export default function FAQContent() {
                       {category.title}
                     </h2>
                   </div>
-                  
+
                   <div className="space-y-4">
                     {category.faqs.map((faq, index) => (
                       <motion.div

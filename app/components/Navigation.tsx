@@ -3,8 +3,10 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useBooking } from "@/lib/contexts/BookingContext";
 
 export function Navigation() {
+  const { openBooking } = useBooking();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   return (
@@ -55,12 +57,12 @@ export function Navigation() {
             >
               Blog
             </Link>
-            <Link
-              href="/contact"
-              className="bg-[#1a1a2e] text-white px-4 py-2 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300"
+            <button
+              onClick={openBooking}
+              className="bg-[#1a1a2e] text-white px-4 py-2 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300 cursor-pointer"
             >
-              Contact Us
-            </Link>
+              Book Consultation
+            </button>
           </div>
 
           {/* Mobile Menu Button */}
@@ -124,13 +126,15 @@ export function Navigation() {
               >
                 Blog
               </Link>
-              <Link
-                href="/contact"
-                className="bg-[#1a1a2e] text-white px-4 py-2 mx-4 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300 text-center"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => {
+                  setIsMenuOpen(false);
+                  openBooking();
+                }}
+                className="bg-[#1a1a2e] text-white px-4 py-2 mx-4 rounded-md hover:bg-[#FF8A00] hover:text-[#1a1a2e] transition-all duration-300 text-center cursor-pointer"
               >
-                Contact Us
-              </Link>
+                Book Consultation
+              </button>
             </div>
           </div>
         )}

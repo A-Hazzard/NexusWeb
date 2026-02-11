@@ -1,4 +1,4 @@
-import { initializeApp, FirebaseApp } from 'firebase/app'
+import { initializeApp, getApps, getApp, FirebaseApp } from 'firebase/app'
 import { getAuth, Auth } from 'firebase/auth'
 import { getFirestore, Firestore } from 'firebase/firestore'
 import { getStorage, FirebaseStorage } from 'firebase/storage'
@@ -24,16 +24,16 @@ let analytics: Analytics | null = null
 
 try {
   // Only initialize if we have a real API key and App ID (not mock values)
-  if (process.env.NEXT_PUBLIC_FIREBASE_API_KEY && 
-      process.env.NEXT_PUBLIC_FIREBASE_API_KEY !== 'mock-key' &&
-      process.env.NEXT_PUBLIC_FIREBASE_APP_ID &&
-      process.env.NEXT_PUBLIC_FIREBASE_APP_ID !== 'mock-app-id') {
-    
-    app = initializeApp(firebaseConfig)
+  if (process.env.NEXT_PUBLIC_FIREBASE_API_KEY &&
+    process.env.NEXT_PUBLIC_FIREBASE_API_KEY !== 'mock-key' &&
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID &&
+    process.env.NEXT_PUBLIC_FIREBASE_APP_ID !== 'mock-app-id') {
+
+    app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApp()
     auth = getAuth(app)
     db = getFirestore(app)
     storage = getStorage(app)
-    
+
     // Initialize Analytics only in browser
     if (typeof window !== 'undefined') {
       analytics = getAnalytics(app)

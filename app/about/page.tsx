@@ -67,8 +67,7 @@ const timelineItems: TimelineItemProps[] = [
 
 const stats = [
   { id: 1, number: 5, label: 'Years of Experience', icon: 'calendar' },
-  { id: 2, number: 15, label: 'Happy Clients', icon: 'users' },
-  { id: 3, number: 25, label: 'Projects Completed', icon: 'project-diagram' },
+  { id: 3, number: 20, label: 'Projects Completed', icon: 'project-diagram' },
   { id: 4, number: 100, label: 'Websites Optimized', icon: 'chart-line' }
 ]
 

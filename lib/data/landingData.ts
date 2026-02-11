@@ -18,41 +18,64 @@ import type {
 export const testimonials: ClientTestimonial[] = [
   {
     id: 'testimonial-1',
-    name: 'Maria Rodriguez',
-    company: 'Caribbean Restaurant Group',
-    position: 'Owner',
+    name: 'Rishi Kowlessar',
+    company: 'Uptech Incorporated Limited (Ourlime)',
+    position: 'Founder',
     image: 'https://picsum.photos/150/150?random=300',
-    quote: 'Nexus Web increased our online orders by 340% in just 3 months. The new website is beautiful and our customers love the easy ordering system.',
-    results: ['340% increase in online orders', '90% customer satisfaction', '50% reduction in support calls'],
+    quote: 'Nexus Web helped refine Ourlime\'s vision for a safe, private community network. Their understanding of our goals for user safety and data security was exceptional.',
+    results: ['Platform launched successfully', 'Robust security implementation', 'Seamless user experience'],
     rating: 5,
-    industry: 'Restaurant',
+    industry: 'Technology',
     verified: true
   },
   {
     id: 'testimonial-2',
-    name: 'David Thompson',
-    company: 'Thompson Medical Center',
-    position: 'Practice Manager',
+    name: 'Noblis Talent Solution',
+    company: 'Noblis Talent Solution',
+    position: 'Director',
     image: 'https://picsum.photos/150/150?random=301',
-    quote: 'Our new website has streamlined patient appointments and improved our online presence significantly. Nexus Web delivered exactly what we needed.',
-    results: ['200% increase in online bookings', '60% reduction in phone calls', '95% patient satisfaction'],
+    quote: 'Our work blends strategic insight with human behavior. Nexus Web perfectly aligned our digital presence with our vision of helping organizations thrive.',
+    results: ['Aligned culture with vision', 'Enhanced digital presence', 'Sustainable results'],
     rating: 5,
-    industry: 'Healthcare',
+    industry: 'Consulting',
     verified: true
   },
   {
     id: 'testimonial-3',
-    name: 'Sarah Johnson',
-    company: 'Island Fashion Boutique',
-    position: 'Store Manager',
+    name: 'CelebFit Life Team',
+    company: 'CelebFit Life',
+    position: 'Management',
     image: 'https://picsum.photos/150/150?random=302',
-    quote: 'The e-commerce platform Nexus Web built for us has transformed our business. We now reach customers across the entire Caribbean.',
-    results: ['500% increase in online sales', 'Expanded to 5 new markets', '40% increase in customer base'],
+    quote: 'Nexus Web captured the exclusivity and energy of our live celebrity training experience. They helped us fill our limited spots with a high-converting platform.',
+    results: ['Sold out specialized cohorts', 'High conversion rate', 'Premium brand experience'],
     rating: 5,
-    industry: 'Retail',
+    industry: 'Fitness',
     verified: true
   },
-
+  {
+    id: 'testimonial-4',
+    name: 'Listware Collective',
+    company: 'Listware Collective',
+    position: 'Creative Director',
+    image: 'https://picsum.photos/150/150?random=303',
+    quote: 'Nexus Web understood our mission to blend Caribbean culture with compelling narratives. They built a platform that beautifully showcases our documentary and content work.',
+    results: ['Showcased portfolio effectively', 'Connected with audience', 'Cultural alignment'],
+    rating: 5,
+    industry: 'Media',
+    verified: true
+  },
+  {
+    id: 'testimonial-5',
+    name: 'Digital Utopia Team',
+    company: 'Digital Utopia',
+    position: 'Management',
+    image: 'https://picsum.photos/150/150?random=304',
+    quote: 'Nexus Web provided a secure and scalable platform for Digital Utopia, our copy trading solution. Their expertise in real-time data and user security was invaluable for our launch.',
+    results: ['Secure trading platform', 'Real-time data integration', 'Scalable architecture'],
+    rating: 5,
+    industry: 'Finance',
+    verified: true
+  }
 ]
 
 // Service Packages
@@ -72,7 +95,7 @@ export const services: ServicePackage[] = [
       'Social Media Integration'
     ],
     technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS'],
-    price: 'Starting from $2,500 TTD',
+    price: 'Contact for Consultation',
     timeline: '2-4 weeks',
     image: 'https://picsum.photos/600/400?random=200',
     popular: true,
@@ -93,7 +116,7 @@ export const services: ServicePackage[] = [
       'Analytics Dashboard'
     ],
     technologies: ['Shopify', 'WooCommerce', 'Stripe', 'PayPal'],
-    price: 'Starting from $3,500 TTD',
+    price: 'Contact for Consultation',
     timeline: '3-5 weeks',
     image: 'https://picsum.photos/600/400?random=201',
     category: 'e-commerce'
@@ -113,30 +136,10 @@ export const services: ServicePackage[] = [
       'Monthly Performance Reviews'
     ],
     technologies: ['Google Analytics', 'Google Ads', 'Facebook Ads', 'SEMrush'],
-    price: 'Starting from $1,200 TTD/month',
+    price: 'Contact for Consultation',
     timeline: 'Ongoing',
     image: 'https://picsum.photos/600/400?random=202',
     category: 'seo'
-  },
-  {
-    id: 'maintenance',
-    title: 'Website Maintenance',
-    description: 'Keep your website secure, updated, and performing optimally with our maintenance plans',
-    features: [
-      'Regular Security Updates',
-      'Performance Monitoring',
-      'Backup & Recovery',
-      'Content Updates',
-      'Bug Fixes',
-      'Plugin Updates',
-      'Uptime Monitoring',
-      'Priority Support'
-    ],
-    technologies: ['WordPress', 'React', 'Node.js', 'Cloudflare'],
-    price: 'Starting from 300 TTD/month',
-    timeline: 'Ongoing',
-    image: 'https://picsum.photos/600/400?random=203',
-    category: 'maintenance'
   }
 ]
 
@@ -275,81 +278,9 @@ export const processSteps: ProcessStep[] = [
 ]
 
 // Pricing Tiers
-export const pricingTiers: PricingTier[] = [
-  {
-    id: 'starter',
-    name: 'Starter',
-    price: '$2,500',
-    period: 'TTD',
-    description: 'Perfect for small businesses and startups looking to establish their online presence.',
-    features: [
-      '5-page responsive website',
-      'Mobile-optimized design',
-      'Basic SEO setup',
-      'Contact form',
-      'Google Analytics',
-      '3 months free support',
-      'SSL certificate',
-      'Basic content management'
-    ],
-    limitations: [
-      'Limited customization',
-      'Basic support only'
-    ],
-    popular: false,
-    ctaText: 'Get Started',
-    ctaLink: '/contact',
-    color: 'from-gray-500 to-gray-600'
-  },
-  {
-    id: 'professional',
-    name: 'Professional',
-    price: '$4,500',
-    period: 'TTD',
-    description: 'Ideal for growing businesses that need advanced features and functionality.',
-    features: [
-      '10-page responsive website',
-      'Custom design & branding',
-      'Advanced SEO optimization',
-      'E-commerce integration',
-      'Customer portal',
-      '6 months free support',
-      'Performance optimization',
-      'Advanced analytics',
-      'Social media integration',
-      'Email marketing setup'
-    ],
-    popular: true,
-    ctaText: 'Most Popular',
-    ctaLink: '/contact',
-    color: 'from-[#FF8A00] to-[#FF4D00]'
-  },
-  {
-    id: 'enterprise',
-    name: 'Enterprise',
-    price: '$8,500',
-    period: 'TTD',
-    description: 'Complete solution for large businesses with complex requirements.',
-    features: [
-      'Unlimited pages',
-      'Fully custom design',
-      'Advanced e-commerce',
-      'Multi-user management',
-      'API integrations',
-      '12 months free support',
-      'Priority support',
-      'Custom functionality',
-      'Advanced security',
-      'Performance monitoring',
-      'Dedicated project manager',
-      'Training & documentation'
-    ],
-    popular: false,
-    ctaText: 'Contact Us',
-    ctaLink: '/contact',
-    color: 'from-purple-500 to-pink-500'
-  }
-]
+// Pricing Tiers - Removed as requested
+export const pricingTiers: PricingTier[] = []
+
 
 // Blog Posts
 export const blogPosts: BlogPost[] = [
@@ -1689,13 +1620,6 @@ export const trustIndicators: TrustIndicator[] = [
     description: 'Satisfied customers across Trinidad & Tobago'
   },
   {
-    id: 'trust-3',
-    type: 'award',
-    title: 'Best Web Agency',
-    value: '2023',
-    description: 'Recognized by Trinidad Business Awards'
-  },
-  {
     id: 'trust-4',
     type: 'certification',
     title: 'GDPR Compliant',
@@ -1708,39 +1632,33 @@ export const trustIndicators: TrustIndicator[] = [
 export const clientLogos: ClientLogo[] = [
   {
     id: 'logo-1',
-    name: 'Caribbean Restaurant Group',
+    name: 'Uptech Incorporated (Ourlime)',
     image: 'https://picsum.photos/120/80?random=600',
-    industry: 'Restaurant'
-  },
-  {
-    id: 'logo-2',
-    name: 'Thompson Medical Center',
-    image: 'https://picsum.photos/120/80?random=601',
-    industry: 'Healthcare'
-  },
-  {
-    id: 'logo-3',
-    name: 'Island Fashion Boutique',
-    image: 'https://picsum.photos/120/80?random=602',
-    industry: 'Retail'
-  },
-  {
-    id: 'logo-4',
-    name: 'Trinidad Tech Solutions',
-    image: 'https://picsum.photos/120/80?random=603',
     industry: 'Technology'
   },
   {
-    id: 'logo-5',
-    name: 'Caribbean Legal Services',
-    image: 'https://picsum.photos/120/80?random=604',
-    industry: 'Professional Services'
+    id: 'logo-2',
+    name: 'Noblis Talent Solution',
+    image: 'https://picsum.photos/120/80?random=601',
+    industry: 'Consulting'
   },
   {
-    id: 'logo-6',
-    name: 'Singh Construction Ltd',
-    image: 'https://picsum.photos/120/80?random=605',
-    industry: 'Construction'
+    id: 'logo-3',
+    name: 'CelebFit Life',
+    image: 'https://picsum.photos/120/80?random=602',
+    industry: 'Fitness'
+  },
+  {
+    id: 'logo-4',
+    name: 'Listware Collective',
+    image: 'https://picsum.photos/120/80?random=603',
+    industry: 'Media'
+  },
+  {
+    id: 'logo-5',
+    name: 'Digital Utopia',
+    image: 'https://picsum.photos/120/80?random=604',
+    industry: 'Finance'
   }
 ]
 

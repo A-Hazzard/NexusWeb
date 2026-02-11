@@ -12,10 +12,9 @@ import FloatingGeometry from "@/components/three/FloatingGeometry";
 import SmoothScroll from "@/components/ui/SmoothScroll";
 
 // Import business components
-import ClientTestimonials from "@/components/business/ClientTestimonials";
+import { useBooking } from "@/lib/contexts/BookingContext";
 import ServiceCards from "@/components/business/ServiceCards";
 import ProcessTimeline from "@/components/business/ProcessTimeline";
-import PricingCards from "@/components/business/PricingCards";
 import NewsletterSignup from "@/components/business/NewsletterSignup";
 
 // Import section components
@@ -27,7 +26,6 @@ import {
   testimonials,
   services,
   processSteps,
-  pricingTiers,
   blogPosts,
   trustIndicators,
   clientLogos,
@@ -40,6 +38,7 @@ import {
 import landingImage from "../public/landingimage.jpg";
 
 export default function Home() {
+  const { openBooking } = useBooking();
   const containerRef = useRef<HTMLDivElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
   const { scrollYProgress } = useScroll();
@@ -120,11 +119,11 @@ export default function Home() {
                   transition={{ duration: 0.6, delay: 0.8 }}
                   className="flex flex-col sm:flex-row gap-6 justify-center lg:justify-start mb-16"
                 >
-                  <Link
-                    href="/contact"
-                    className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden"
+                  <button
+                    onClick={openBooking}
+                    className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden cursor-pointer"
                   >
-                    <span className="relative z-10">Start Your Journey</span>
+                    <span className="relative z-10">Book Consultation</span>
                     <motion.div
                       className="absolute inset-0 bg-gradient-to-r from-[#FF4D00] to-[#FF8A00]"
                       initial={{ x: "100%" }}
@@ -146,7 +145,7 @@ export default function Home() {
                         d="M13 7l5 5m0 0l-5 5m5-5H6"
                       />
                     </motion.svg>
-                  </Link>
+                  </button>
 
                   <Link
                     href="/portfolio"
@@ -308,10 +307,8 @@ export default function Home() {
           clientLogos={clientLogos}
           testimonials={testimonials}
           stats={[
-            { number: "100+", label: "Projects Completed", description: "Successfully delivered" },
-            { number: "50+", label: "Happy Clients", description: "Across Trinidad & Tobago" },
-            { number: "5+", label: "Years Experience", description: "In web development" },
-            { number: "24/7", label: "Support Available", description: "Always here to help" }
+            { number: "20+", label: "Projects Completed", description: "Successfully delivered" },
+            { number: "5+", label: "Years Experience", description: "In web development" }
           ]}
         />
 
@@ -343,7 +340,7 @@ export default function Home() {
                 {
                   title: "Proven Track Record",
                   description:
-                    "5+ years of experience with 100+ successful projects. From startups to established businesses, we deliver results.",
+                    "5+ years of experience with 20+ successful projects. From startups to established businesses, we deliver results.",
                   icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
                   color: "from-green-500 to-emerald-500",
                 },
@@ -419,23 +416,12 @@ export default function Home() {
           </div>
         </section>
 
-        {/* Services Section */}
+        {/* Services & Engagement Models Merged Section */}
         <ServiceCards
           services={services}
           features={serviceFeatures}
+          className="pb-0" // Remove bottom padding
         />
-
-        {/* Pricing Section */}
-        <PricingCards
-          tiers={pricingTiers}
-        />
-
-        {/* Testimonials Section */}
-        <ClientTestimonials
-          testimonials={testimonials}
-        />
-
-
 
         {/* Process Section */}
         <ProcessTimeline
@@ -472,7 +458,7 @@ export default function Home() {
                 </span>
               </h2>
               <p className="text-xl md:text-2xl text-gray-300 max-w-3xl mx-auto leading-relaxed">
-                Let&apos;s discuss your project and create something extraordinary together. 
+                Let&apos;s discuss your project and create something extraordinary together.
                 Get in touch with us today for a free consultation.
               </p>
             </ScrollReveal>
@@ -506,7 +492,7 @@ export default function Home() {
                           placeholder="Your last name"
                         />
                       </div>
-                        </div>
+                    </div>
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-2">
                         Email Address
@@ -544,7 +530,7 @@ export default function Home() {
                         <option value="maintenance">Website Maintenance</option>
                         <option value="consultation">Consultation</option>
                       </select>
-            </div>
+                    </div>
                     <div>
                       <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-2">
                         Project Details
@@ -555,7 +541,7 @@ export default function Home() {
                         className="w-full px-4 py-3 bg-white/10 border border-white/20 rounded-xl text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-[#FF8A00] focus:border-transparent transition-all duration-300 resize-none"
                         placeholder="Tell us about your project, goals, and timeline..."
                       />
-          </div>
+                    </div>
                     <motion.button
                       type="submit"
                       className="w-full py-4 bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white font-bold rounded-xl hover:shadow-lg hover:scale-105 transition-all duration-300"
@@ -566,7 +552,7 @@ export default function Home() {
                     </motion.button>
                   </form>
                 </div>
-            </ScrollReveal>
+              </ScrollReveal>
 
               {/* Contact Information */}
               <ScrollReveal delay={0.2}>
@@ -574,7 +560,7 @@ export default function Home() {
                   <div>
                     <h3 className="text-2xl font-bold text-white mb-6">Contact Information</h3>
                     <p className="text-gray-300 leading-relaxed mb-8">
-                      Ready to transform your digital presence? We&apos;re here to help you succeed. 
+                      Ready to transform your digital presence? We&apos;re here to help you succeed.
                       Reach out to us through any of the channels below.
                     </p>
                   </div>
@@ -628,17 +614,17 @@ export default function Home() {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center text-white hover:bg-[#FF8A00] hover:border-[#FF8A00] transition-all duration-300"
-                    whileHover={{ scale: 1.1 }}
+                        whileHover={{ scale: 1.1 }}
                         whileTap={{ scale: 0.9 }}
                       >
                         <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
-                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                          <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
                       </motion.a>
                     </div>
                   </div>
-                    </div>
-            </ScrollReveal>
+                </div>
+              </ScrollReveal>
             </div>
 
             {/* Newsletter Section - Now truly part of the same section */}

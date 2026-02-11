@@ -27,7 +27,7 @@ export default function ServicesShowcase({
   }, []);
 
   return (
-    <section 
+    <section
       ref={sectionRef}
       className={`py-32 bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 relative overflow-hidden ${className}`}
     >
@@ -67,7 +67,7 @@ export default function ServicesShowcase({
             className="inline-block px-6 py-3 rounded-full bg-gradient-to-r from-orange-500/10 to-red-500/10 border border-orange-200 mb-8"
             initial={{ opacity: 0, scale: 0.8 }}
             whileInView={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, ease: "back.out(1.7)" }}
+            transition={{ duration: 0.6, ease: "backOut" }}
           >
             <span className="text-[#FF8A00] font-semibold text-lg">
               ⚡ {subtitle}
@@ -130,7 +130,7 @@ export default function ServicesShowcase({
         >
           <motion.button
             className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-12 py-5 rounded-2xl text-lg font-bold transition-all duration-300 inline-flex items-center justify-center overflow-hidden shadow-2xl shadow-orange-500/25"
-            whileHover={{ 
+            whileHover={{
               scale: 1.05,
               boxShadow: "0 25px 50px -12px rgba(255, 138, 0, 0.4)"
             }}

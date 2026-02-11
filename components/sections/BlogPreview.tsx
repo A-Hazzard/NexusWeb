@@ -99,7 +99,7 @@ export default function BlogPreview({
                       </div>
                     </div>
                     <Link
-                      href={`/blog/${posts[0].slug}`}
+                      href={`/blogs/${posts[0].slug}`}
                       className="inline-flex items-center text-[#FF8A00] font-semibold hover:text-[#FF4D00] transition-colors"
                     >
                       Read More
@@ -128,7 +128,7 @@ export default function BlogPreview({
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {posts.slice(1, 4).map((post, index) => (
             <ScrollReveal key={post.id} delay={0.1 * index}>
-              <Link href={`/blog/${post.slug}`}>
+              <Link href={`/blogs/${post.slug}`}>
                 <motion.div
                   className="group relative bg-white rounded-2xl p-6 shadow-lg hover:shadow-xl transition-all duration-500 border border-gray-100 overflow-hidden cursor-pointer"
                   whileHover={{ y: -8, scale: 1.02 }}
@@ -204,7 +204,7 @@ export default function BlogPreview({
         {/* CTA */}
         <ScrollReveal className="text-center">
           <Link
-            href="/blog"
+            href="/blogs"
             className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden"
           >
             <span className="relative z-10">View All Posts</span>

@@ -44,7 +44,7 @@ export default function ServiceCards({
   };
 
   return (
-    <section className={`py-32 bg-gradient-to-b from-gray-50 to-white relative overflow-hidden ${className}`}>
+    <section className={` bg-gradient-to-b from-gray-50 to-white relative overflow-hidden ${className}`}>
       <div className="container mx-auto px-4 relative z-10">
         <ScrollReveal className="text-center mb-20">
           <motion.div
@@ -209,7 +209,7 @@ export default function ServiceCards({
           ))}
         </div>
 
-        <ScrollReveal className="text-center mt-16">
+        <ScrollReveal className="text-center my-16">
           <Link
             href="/services"
             className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden"

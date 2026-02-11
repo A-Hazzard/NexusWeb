@@ -51,9 +51,23 @@ const config: Config = {
         'soft': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
         'hover': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
       },
+      typography: ({ theme }: { theme: any }) => ({
+        orange: {
+          css: {
+            '--tw-prose-links': '#FF8A00',
+            '--tw-prose-bullets': '#FF8A00',
+            '--tw-prose-counters': '#FF8A00',
+            '--tw-prose-headings': '#1a1a2e',
+            '--tw-prose-body': '#374151',
+            '--tw-prose-bold': '#111827',
+          },
+        },
+      }),
     },
   },
-  plugins: [],
+  plugins: [
+    require('@tailwindcss/typography'),
+  ],
 }
 
 export default config 

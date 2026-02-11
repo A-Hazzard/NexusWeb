@@ -4,6 +4,7 @@ import { useEffect, useRef } from 'react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
+import { useBooking } from '@/lib/contexts/BookingContext'
 import { initPageAnimations } from '@/lib/utils/animations'
 import ScrollReveal from '@/components/animations/ScrollReveal'
 import ParallaxSection from '@/components/animations/ParallaxSection'
@@ -33,7 +34,6 @@ const services = [
       'API Integration'
     ],
     technologies: ['React', 'Next.js', 'TypeScript', 'Tailwind CSS', 'Node.js', 'MongoDB'],
-    price: 'Starting from $2,500 TTD',
     image: 'https://picsum.photos/600/400?random=30',
     color: 'from-blue-500 to-cyan-500'
   },
@@ -50,7 +50,6 @@ const services = [
       'Analytics & Reporting'
     ],
     technologies: ['Google Analytics', 'Search Console', 'SEMrush', 'Facebook Ads', 'Google Ads'],
-    price: 'Starting from $1,200 TTD/month',
     image: 'https://picsum.photos/600/400?random=31',
     color: 'from-green-500 to-emerald-500'
   },
@@ -67,7 +66,6 @@ const services = [
       'Multi-Currency Support'
     ],
     technologies: ['Shopify', 'WooCommerce', 'Stripe', 'PayPal', 'Square'],
-    price: 'Starting from $4,000 TTD',
     image: 'https://picsum.photos/600/400?random=32',
     color: 'from-purple-500 to-pink-500'
   },
@@ -84,7 +82,6 @@ const services = [
       'Uptime Monitoring'
     ],
     technologies: ['cPanel', 'CloudFlare', 'SSL Certificates', 'Monitoring Tools'],
-    price: 'Starting from $300 TTD/month',
     image: 'https://picsum.photos/600/400?random=33',
     color: 'from-orange-500 to-red-500'
   }
@@ -118,6 +115,7 @@ const process = [
 ]
 
 export default function ServicesPage() {
+  const { openBooking } = useBooking()
   const containerRef = useRef<HTMLDivElement>(null)
 
   useEffect(() => {
@@ -148,7 +146,7 @@ export default function ServicesPage() {
               >
                 <span className="text-[#FF8A00] font-semibold text-lg">🚀 Our Services</span>
               </motion.div>
-              
+
               <motion.h1
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -160,7 +158,7 @@ export default function ServicesPage() {
                   Digital Solutions
                 </span>
               </motion.h1>
-              
+
               <motion.p
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -176,9 +174,9 @@ export default function ServicesPage() {
                 transition={{ duration: 0.6, delay: 0.6 }}
                 className="flex flex-col sm:flex-row gap-6 justify-center"
               >
-                <Link
-                  href="/contact"
-                  className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden"
+                <button
+                  onClick={openBooking}
+                  className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-10 py-5 rounded-xl text-lg font-semibold transition-all duration-300 inline-flex items-center justify-center overflow-hidden cursor-pointer"
                 >
                   <span className="relative z-10">Get Free Quote</span>
                   <motion.svg
@@ -191,7 +189,7 @@ export default function ServicesPage() {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </motion.svg>
-                </Link>
+                </button>
               </motion.div>
             </div>
           </div>
@@ -271,15 +269,14 @@ export default function ServicesPage() {
 
                       <div className="flex items-center justify-between pt-6">
                         <div>
-                          <div className="text-2xl font-bold text-gray-900">{service.price}</div>
-                          <div className="text-gray-600">Contact for custom quote</div>
+                          {/* Price removed as requested */}
                         </div>
-                        <Link
-                          href="/contact"
-                          className={`bg-gradient-to-r ${service.color} text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300`}
+                        <button
+                          onClick={openBooking}
+                          className={`bg-gradient-to-r ${service.color} text-white px-6 py-3 rounded-xl font-semibold hover:shadow-lg transition-all duration-300 cursor-pointer`}
                         >
-                          Get Started
-                        </Link>
+                          Book Consultation
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -333,15 +330,15 @@ export default function ServicesPage() {
                   Digital Journey?
                 </span>
               </h2>
-              
+
               <p className="text-xl md:text-2xl text-gray-300 mb-12 max-w-3xl mx-auto leading-relaxed">
                 Let&apos;s discuss your project and create something amazing together. Get a free consultation today.
               </p>
 
               <div className="flex flex-col sm:flex-row gap-6 justify-center">
-                <Link
-                  href="/contact"
-                  className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all duration-300 inline-flex items-center justify-center overflow-hidden shadow-2xl shadow-orange-500/25 hover:shadow-orange-500/40"
+                <button
+                  onClick={openBooking}
+                  className="group relative bg-gradient-to-r from-[#FF8A00] to-[#FF4D00] text-white px-12 py-6 rounded-2xl text-xl font-bold transition-all duration-300 inline-flex items-center justify-center overflow-hidden shadow-2xl shadow-orange-500/25 hover:shadow-orange-500/40 cursor-pointer"
                 >
                   <span className="relative z-10">Get Free Consultation</span>
                   <motion.svg
@@ -354,8 +351,8 @@ export default function ServicesPage() {
                   >
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                   </motion.svg>
-                </Link>
-                
+                </button>
+
                 <Link
                   href="/portfolio"
                   className="group border-2 border-white/30 bg-white/10 backdrop-blur-sm text-white px-12 py-6 rounded-2xl text-xl font-bold hover:bg-white/20 hover:border-white/50 transition-all duration-300 inline-flex items-center justify-center"

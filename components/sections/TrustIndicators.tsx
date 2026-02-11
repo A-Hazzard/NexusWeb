@@ -70,7 +70,7 @@ export default function TrustIndicators({
                   </div>
                 ))}
               </div>
-              
+
               {/* Fade overlays for the wall effect */}
               <div className="absolute left-0 top-0 bottom-0 w-32 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none" />
               <div className="absolute right-0 top-0 bottom-0 w-32 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none" />
@@ -79,11 +79,11 @@ export default function TrustIndicators({
         )}
 
         {/* Trust Indicators */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 mb-16">
+        <div className="flex flex-wrap justify-center gap-8 mb-16">
           {indicators.map((indicator, index) => (
             <ScrollReveal key={indicator.id} delay={0.1 * index}>
               <motion.div
-                className="text-center p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-all duration-300"
+                className="text-center p-6 bg-gray-50 rounded-2xl hover:bg-gray-100 transition-all duration-300 w-full md:w-72"
                 whileHover={{ y: -5, scale: 1.02 }}
                 transition={{ duration: 0.3 }}
               >
@@ -118,11 +118,11 @@ export default function TrustIndicators({
 
         {/* Stats */}
         <ScrollReveal>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
+          <div className="flex flex-wrap justify-center gap-12 max-w-4xl mx-auto">
             {stats.map((stat, index) => (
               <motion.div
                 key={index}
-                className="text-center"
+                className="text-center min-w-[160px]"
                 initial={{ scale: 0.8, opacity: 0 }}
                 whileInView={{ scale: 1, opacity: 1 }}
                 transition={{ duration: 0.5, delay: 0.1 * index }}
@@ -140,29 +140,6 @@ export default function TrustIndicators({
           </div>
         </ScrollReveal>
 
-        {/* Trust Badges */}
-        <ScrollReveal className="text-center mt-16">
-          <div className="flex flex-wrap justify-center items-center gap-8">
-            {[
-              { name: "SSL Secured", icon: "🔒" },
-              { name: "GDPR Compliant", icon: "🛡️" },
-              { name: "24/7 Support", icon: "🚀" },
-              { name: "Money Back Guarantee", icon: "💰" },
-            ].map((badge, index) => (
-              <motion.div
-                key={index}
-                className="flex items-center text-gray-600 bg-gray-50 px-4 py-2 rounded-full"
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 * index }}
-                whileHover={{ scale: 1.05 }}
-              >
-                <span className="text-lg mr-2">{badge.icon}</span>
-                <span className="text-sm font-medium">{badge.name}</span>
-              </motion.div>
-            ))}
-          </div>
-        </ScrollReveal>
       </div>
     </section>
   );
