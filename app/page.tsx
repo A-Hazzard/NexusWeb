@@ -17,7 +17,7 @@ import type { BlogPost } from "@/lib/types/business";
 // Import business components
 import { useBooking } from "@/lib/contexts/BookingContext";
 import ServiceCards from "@/components/business/ServiceCards";
-import ProcessTimeline from "@/components/business/ProcessTimeline";
+
 import NewsletterSignup from "@/components/business/NewsletterSignup";
 
 // Import section components
@@ -417,13 +417,6 @@ export default function Home() {
                   color: "from-blue-500 to-cyan-500",
                 },
                 {
-                  title: "Proven Track Record",
-                  description:
-                    "5+ years of experience with 20+ successful projects. From startups to established businesses, we deliver results.",
-                  icon: "M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z",
-                  color: "from-green-500 to-emerald-500",
-                },
-                {
                   title: "Modern Technology Stack",
                   description:
                     "We use cutting-edge technologies like React, Next.js, and modern design principles to build future-proof websites.",
@@ -431,25 +424,11 @@ export default function Home() {
                   color: "from-purple-500 to-pink-500",
                 },
                 {
-                  title: "Mobile-First Approach",
-                  description:
-                    "With 80% of Caribbean users browsing on mobile, we ensure your website looks perfect on every device.",
-                  icon: "M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z",
-                  color: "from-orange-500 to-red-500",
-                },
-                {
                   title: "SEO & Local Marketing",
                   description:
                     "Dominate local search results and reach your target audience in Trinidad, Tobago, and the wider Caribbean.",
                   icon: "M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z",
                   color: "from-indigo-500 to-purple-500",
-                },
-                {
-                  title: "Ongoing Support",
-                  description:
-                    "24/7 technical support, regular updates, and maintenance to keep your website secure and performing optimally.",
-                  icon: "M18.364 5.636l-3.536 3.536m0 5.656l3.536 3.536M9.172 9.172L5.636 5.636m3.536 9.192L5.636 18.364",
-                  color: "from-teal-500 to-cyan-500",
                 },
               ].map((benefit, index) => (
                 <ScrollReveal key={index} delay={0.1 * index}>
@@ -492,20 +471,65 @@ export default function Home() {
                 </ScrollReveal>
               ))}
             </div>
+
+            <div className="mt-16 text-center">
+              <Link
+                href="/about"
+                className="inline-flex items-center text-[#FF8A00] font-bold hover:text-[#FF6B00] transition-colors group"
+              >
+                More reasons to choose us
+                <svg className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </Link>
+            </div>
           </div>
         </section>
 
         {/* Services & Engagement Models Merged Section */}
         <ServiceCards
-          services={services}
+          services={services.slice(0, 3)}
           features={serviceFeatures}
           className="pb-0" // Remove bottom padding
         />
 
-        {/* Process Section */}
-        <ProcessTimeline
-          steps={processSteps}
-        />
+        {/* Condensed Process Section */}
+        <section className="py-24 bg-gradient-to-b from-gray-50 to-white">
+          <div className="container mx-auto px-4">
+            <ScrollReveal className="text-center mb-16">
+              <h2 className="text-3xl md:text-5xl font-bold text-gray-900 mb-6">
+                Our Simple
+                <span className="text-[#FF8A00] ml-2">Process</span>
+              </h2>
+              <p className="text-xl text-gray-600 max-w-2xl mx-auto">
+                We've streamlined our workflow to deliver exceptional results efficiently.
+              </p>
+            </ScrollReveal>
+
+            <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-6xl mx-auto">
+              {processSteps.slice(0, 4).map((step, index) => (
+                <ScrollReveal key={index} delay={0.1 * index}>
+                  <div className="text-center group">
+                    <div className={`w-16 h-16 mx-auto bg-gradient-to-r ${step.color} rounded-2xl flex items-center justify-center text-white shadow-lg mb-6 group-hover:scale-110 transition-transform duration-300`}>
+                      <span className="text-xl font-bold">{index + 1}</span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-900 mb-3">{step.title}</h3>
+                    <p className="text-sm text-gray-600">{step.description}</p>
+                  </div>
+                </ScrollReveal>
+              ))}
+            </div>
+
+            <div className="mt-16 text-center">
+              <Link
+                href="/services"
+                className="inline-flex items-center justify-center px-8 py-4 bg-white border-2 border-[#FF8A00] text-[#FF8A00] rounded-xl font-bold hover:bg-[#FF8A00] hover:text-white transition-all duration-300"
+              >
+                View Detailed Process
+              </Link>
+            </div>
+          </div>
+        </section>
 
         {/* Blog Preview Section */}
         <BlogPreview
