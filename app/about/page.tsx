@@ -490,7 +490,7 @@ export default function AboutPage() {
                     <i className="fas fa-phone text-[#FF8A00]"></i>
                     <div className="flex flex-col">
                       <a href="tel:+18684921566" className="hover:text-[#FF8A00] transition-colors">Call: +1 (868) 492-1566</a>
-                      <a href="https://wa.me/18683521435" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF8A00] transition-colors">WhatsApp: +1 (868) 352-1435</a>
+                      <a href="https://wa.me/18683521435" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF8A00] transition-colors">WhatsApp: +1 (868) 492-1566</a>
                     </div>
                   </div>
                 </motion.div>

@@ -23,7 +23,7 @@ export const BUSINESS_INFO: BusinessInfo = {
   logo: `${SITE_CONFIG.url}/logo.png`,
   image: `${SITE_CONFIG.url}/logo.png`,
   telephone: '+1 (868) 492-1566',
-  whatsapp: '+1 (868) 352-1435',
+  whatsapp: '+1 (868) 492-1566',
   email: 'nexuswebtt@gmail.com',
   address: {
     streetAddress: 'Remote Operations',

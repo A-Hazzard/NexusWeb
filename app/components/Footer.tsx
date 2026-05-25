@@ -100,7 +100,7 @@ export function Footer() {
               </li>
               <li className="text-gray-400">
                 <a href="https://wa.me/18683521435" target="_blank" rel="noopener noreferrer" className="hover:text-[#FF8A00] transition-colors duration-300">
-                  WhatsApp: +1 (868) 352-1435
+                  WhatsApp: +1 (868) 492-1566
                 </a>
               </li>
               <li className="text-gray-400">Trinidad and Tobago</li>

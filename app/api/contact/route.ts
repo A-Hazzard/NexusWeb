@@ -102,7 +102,7 @@ export async function POST(req: Request) {
             <div style="background: white; padding: 20px; border-radius: 8px; text-align: center;">
               <h4 style="color: #FF4D00; margin: 0 0 15px 0;">Contact Information</h4>
               <p style="margin: 5px 0;"><strong>Email:</strong> <a href="mailto:nexuswebtt@gmail.com" style="color: #FF8A00;">nexuswebtt@gmail.com</a></p>
-              <p style="margin: 5px 0;"><strong>Phone:</strong> <a href="tel:+18684921566" style="color: #FF8A00;">+1 (868) 492-1566 (Call)</a> / <a href="https://wa.me/18683521435" style="color: #FF8A00;">+1 (868) 352-1435 (WhatsApp)</a></p>
+              <p style="margin: 5px 0;"><strong>Phone:</strong> <a href="tel:+18684921566" style="color: #FF8A00;">+1 (868) 492-1566 (Call)</a> / <a href="https://wa.me/18683521435" style="color: #FF8A00;">+1 (868) 492-1566 (WhatsApp)</a></p>
               <p style="margin: 5px 0;"><strong>Location:</strong> Trinidad & Tobago</p>
             </div>
             

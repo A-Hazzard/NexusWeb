@@ -699,7 +699,7 @@ export default function Home() {
                       </div>
                       <div>
                         <h4 className="text-lg font-semibold text-white mb-1">Call / WhatsApp</h4>
-                        <p className="text-gray-300">+1 (868) 492-1566 / +1 (868) 352-1435</p>
+                        <p className="text-gray-300">+1 (868) 492-1566 / +1 (868) 492-1566</p>
                         <p className="text-gray-400 text-sm">Mon-Fri: 9:30AM-6:00PM AST</p>
                       </div>
                     </div>
